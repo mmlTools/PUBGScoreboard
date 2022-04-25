@@ -1,4 +1,4 @@
-# PUBGScoreboard
+# PUBG Livestream Scoreboard for tournaments
  
 # BY https://streamcd.net
 # Documentation https://pubgscore.com
