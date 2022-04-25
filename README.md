@@ -1,4 +1,4 @@
-# PUBScoreboard
+# PUBGScoreboard
  
 # BY https://streamcd.net
 # Documentation https://pubgscore.com
