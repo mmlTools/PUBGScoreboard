@@ -10,7 +10,7 @@ PUBG Tournaments are typically held in private ROOMS by various streamers or gam
 
 Esports, short for electronic sports, is a type of video game competition. Esports are usually organized multiplayer video game events between professional players, either individually or in teams. Although organized tournaments have long been a feature of video game culture, they were mostly between amateurs until the late 2000s, when professional gamers began to participate and spectatorship of these events via live streaming skyrocketed. Esports has become a prominent part of the video game industry by the 2010s, with many game makers actively designing and supporting tournaments and other events.
 
-* Resources
+## Resources
 * Bootstrap
 * jQuery
 * WOW.js
