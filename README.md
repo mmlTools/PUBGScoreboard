@@ -1,5 +1,8 @@
 # PUBScoreboard
  
+# BY https://streamcd.net
+# Documentation https://pubgscore.com
+
 Livestream Scoreboard for PUBG tournaments
 The PUBG Scoreboard is a scoreboard used in PUBG private or public tournaments. It comes wrapped in a simple jQuery project that can be used without a webserver and has a customisable UI for those who want to livestream the competition results.
 
