@@ -1,0 +1,258 @@
+{
+  "_comment_A": "Language indexes starting with A",
+  "_comment_B": "Language indexes starting with B",
+  "btn_append_new_team" : {
+    "ro" :  "Adaugă echipă",
+    "en":  "New Team"
+  },
+  "btn_save_changes" : {
+    "ro" :  "Actualizează",
+    "en":  "Save changes"
+  },
+  "btn_download_configuration" : {
+    "ro" :  "Descarcă configurația",
+    "en":  "Download configuration"
+  },
+  "btn_upload_configuration" : {
+    "ro" :  "Încarcă configurație", "en":  "Upload configuration"},
+  "btn_confirm" : {
+    "ro" :  "Confirm",
+    "en":  "Confirm"
+  },
+  "btn_download" : {
+    "ro" :  "Descarcă",
+    "en":  "Download"
+  },
+  "btn_settings_menu" : {
+    "ro" :  "Meniu setări",
+    "en":  "Settings menu"
+  },
+  "btn_reset_competition" : {
+    "ro" :  "Resetează competiția",
+    "en":  "Reset competition"
+  },
+  "btn_reset_scores" : {
+    "ro" :  "Resetează scor",
+    "en":  "Reset score"
+  },
+  "btn_upload" : {
+    "ro" :  "Încarcă dateșe în tabel",
+    "en":  "Load data to table"
+  },
+
+  "_comment_C": "Language indexes starting with C",
+  "competition_results" : {
+    "ro" :  "Rezultate turneu",
+    "en":  "Tournament results"
+  },
+  "competition_day" : {
+    "ro" :  "Ziua",
+    "en":  "Day"
+  },
+  "competition_match" : {
+    "ro" :  "Meciul",
+    "en":  "Match"
+  },
+
+  "_comment_D": "Language indexes starting with D",
+  "donate_coffee" : {
+    "ro" :  "Trimite o cafea",
+    "en":  "Buy me a coffee"
+  },
+
+  "_comment_E": "Language indexes starting with E",
+  "error_invalid_configuration_file" : {
+    "ro" :  "Fișierul selectat nu este un fișier de configurare valid.",
+    "en":  "The selected file is not a valid configuration file."
+  },
+  "error_invalid_file_structure" : {
+    "ro" :  "Structura fișierului selectat nu coincide cu structura actuală a datelor competiției.",
+    "en":  "The structure of the selected file does not match the current structure of the competition data."
+  },
+
+  "_comment_F": "Language indexes starting with F",
+  "_comment_G": "Language indexes starting with G",
+  "_comment_H": "Language indexes starting with H",
+  "_comment_I": "Language indexes starting with I",
+  "info_download_configuration" : {
+    "ro" :  "Denumește configurația",
+    "en":  "Name your configuration"
+  },
+  "info_changes_saved_success" : {
+    "ro" :  "Scorul a fost actualizat cu succes",
+    "en":  "Score successfully updated"
+  },
+  "info_squad_removed_success" : {
+    "ro" :  "Squadul a fost eliminat cu succes din competiție, nu uita să actualizezi tabela !",
+    "en":  "The team has been successfully eliminated from the competition, don't forget to update the table!"
+  },
+  "info_select_json_file" : {
+    "ro" :  "Selectează fișierul de configurație .json",
+    "en":  "Select the .json configuration file"
+  },
+  "info_score_reset_success" : {
+    "ro" :  "Scorul tuturor echipelor a fost resetat cu succes, nu uita să salvezi modificările !",
+    "en":  "The score of all the teams was successfully reset, don't forget to save the changes !"
+  },
+  "info_data_download_success" : {
+    "ro" :  "Fișierul a fost descărcat cu succes, plasează-l în folderul <strong>:/scoreboard/Data</strong> pentru a-l afișa în vizualizarea panoului de scor în livestream!",
+    "en":  "The file was successfully downloaded, place it in the <strong>:/scoreboard/Data</strong> folder to display it in the livestream scoreboard view!"
+  },
+  "info_upload_data_success" : {
+    "ro" :  "Configurația a fost încărcată cu succes iar tabela a fost resetată cu datele recent încărcate.",
+    "en":  "The configuration was successfully uploaded and the table was reset with the recently uploaded data."
+  },
+  "input_competition_name" : {
+    "ro" :  "Denumirea competiției",
+    "en":  "Competition title"
+  },
+  "input_competition_day" : {
+    "ro" :  "Ziua",
+    "en":  "Competition day"
+  },
+  "input_competition_match" : {
+    "ro" :  "Meciul",
+    "en":  "Competition match"
+  },
+  "input_table_map" : {
+    "ro" :  "Harta",
+    "en":  "Map"
+  },
+  "input_tablebg_logo" : {
+    "ro" :  "Fundal coloană logo",
+    "en":  "Logo column background"
+  },
+  "input_tablebg_main" : {
+    "ro" :  "Fundal principal coloane",
+    "en":  "Column main background"
+  },
+  "input_tablebg_secondary" : {
+    "ro" :  "Fundal secundar coloane",
+    "en":  "Column secondary background"
+  },
+  "input_tablebg_wallpaper" : {
+    "ro" :  "Fundal pagină afișaj",
+    "en":  "Scoreboard wallpaper"
+  },
+  "input_table_text_color" : {
+    "ro" :  "Culoare text tabelă",
+    "en":  "Table text color"
+  },
+  "input_teams_page" : {
+    "ro" :  "Afișare echipe/pagină",
+    "en":  "Preview teams/page"
+  },
+  "input_table_alignment" : {
+    "ro" :  "Poziție tabel în livestream",
+    "en":  "Livestream Scoreboard position"
+  },
+  "input_table_animation_in" : {
+    "ro" :  "Animație afișare tabel",
+    "en":  "Show animation"
+  },
+  "input_table_animation_out" : {
+    "ro" :  "Animație ascundere tabel",
+    "en":  "Hide animation"
+  },
+
+  "_comment_J": "Language indexes starting with J",
+  "_comment_K": "Language indexes starting with K",
+  "_comment_L": "Language indexes starting with L",
+  "language_name_ro" : {
+    "ro" :  "Romana",
+    "en":  "Romanian"
+  },
+  "language_name_en" : {
+    "ro" :  "Engleza",
+    "en":  "English"
+  },
+
+  "_comment_M": "Language indexes starting with M",
+  "menu_link_homepage" : {
+    "ro" :  "Setari",
+    "en":  "Settings"
+  },
+  "menu_link_language" : {
+    "ro" :  "Limba",
+    "en":  "Language"
+  },
+  "menu_link_launch_scoreboard" : {
+    "ro" :  "Deschide tabela",
+    "en":  "Launch scoreboard"
+  },
+
+  "_comment_N": "Language indexes starting with N",
+  "_comment_O": "Language indexes starting with O",
+  "_comment_P": "Language indexes starting with P",
+  "_comment_Q": "Language indexes starting with Q",
+  "_comment_R": "Language indexes starting with R",
+  "_comment_S": "Language indexes starting with S",
+  "_comment_T": "Language indexes starting with T",
+  "table_head_squad_logo" : {
+    "ro" :  "Squad logo",
+    "en":  "Squad Logo"
+  },
+  "table_head_squad_name" : {
+    "ro" :  "Denumire squad",
+    "en":  "Squad Title"
+  },
+  "table_head_matches_played" : {
+    "ro" :  "Meciuri jucate",
+    "en":  "Matches Played"
+  },
+  "table_head_chicken_dinner" : {
+    "ro" :  "Chicken dinner",
+    "en":  "Chicken Dinner"
+  },
+  "table_head_place_points" : {
+    "ro" :  "Puncte poziție",
+    "en":  "Place Points"
+  },
+  "table_head_total_kills" : {
+    "ro" :  "Total eliminări",
+    "en":  "Total Kills"
+  },
+  "table_head_total_points" : {
+    "ro" :  "Total puncte",
+    "en":  "Total Points"
+  },
+  "total_teams" : {
+    "ro" :  "Total squaduri",
+    "en":  "Total squads"
+  },
+
+  "_comment_U": "Language indexes starting with U",
+  "upload_status" : {
+    "ro" :  "Status încărcare",
+    "en":  "Upload status"
+  },
+  "upload_status_success" : {
+    "ro" :  "Succes",
+    "en":  "Success"
+  },
+  "upload_status_brieff" : {
+    "ro" :  "Verifică cu mare atenție datele de mai jos înainte de a încărca tabela.",
+    "en":  "Please check the data below carefully before loading the table."
+  },
+
+  "_comment_V": "Language indexes starting with V",
+  "_comment_W": "Language indexes starting with W",
+  "warning_remove_squad" : {
+    "ro" :  "Ești sigur că vrei să ștergi squad-ul din listă ? Această operațiune nu se poate recupera !",
+    "en":  "Are you sure you want to delete the squad from the list? This operation cannot be recovered!"
+  },
+  "warning_reset_competition" : {
+    "ro" :  "Ești sigur că vrei să resetezi toate setările competiției inclusiv echipele înregistrate ? Această operațiune nu se poate recupera, dacă dorești să resetezi doar scorul tuturor echipelor, utilizează opțiunea de resetare scor !",
+    "en":  "Are you sure you want to clear all of the competition's settings, including those for registered teams? This procedure cannot be undone; instead, you can use the score reset option to reset the scores of all teams!"
+  },
+  "warning_reset_scores" : {
+    "ro" :  "Ești sigur că vrei să resetezi scorul tuturor echipelor ? Această operațiune nu se poate recupera!",
+    "en":  "Are you sure you want to reset all team scores? This operation cannot be recovered!"
+  },
+
+  "_comment_X": "Language indexes starting with X",
+  "_comment_Y": "Language indexes starting with Y",
+  "_comment_Z": "Language indexes starting with Z",
+
+  "_TRANSLATION_FILE_END": true
+}
