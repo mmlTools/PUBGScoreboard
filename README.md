@@ -17,6 +17,5 @@ Esports, short for electronic sports, is a type of video game competition. Espor
 * Odometer
 * Animate.css
 
-![og_image](https://user-images.githubusercontent.com/11877277/165120167-78b18b56-3638-47bb-86ef-b9f133db1eb0.jpg)
 ![scb1](https://user-images.githubusercontent.com/11877277/165120172-44da6a14-3160-40e2-bfcd-2f488a89da28.jpg)
 ![scb2](https://user-images.githubusercontent.com/11877277/165120174-3e9e1148-71fc-49b2-bb8c-198ec39d8a1d.jpg)
