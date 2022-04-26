@@ -1,14 +1,5 @@
 <?php
-/*$https_req = false;
-if ((empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === "off") && $https_req) {
-    $location = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-    header('HTTP/1.1 301 Moved Permanently');
-    header('Location: ' . $location);
-    exit;
-}*/
-error_reporting(E_ALL);
 include "Engine/GlobalFunctions.php";
-
 use Engine\GlobalFunctions;
 ?>
 <!DOCTYPE html>
@@ -42,12 +33,12 @@ use Engine\GlobalFunctions;
     <link rel="stylesheet" href="Vendor/css/scoreboard.css">
 </head>
 <body>
-<?php include GlobalFunctions::GetUriSegment(1).".php"; ?>
+<?php include GlobalFunctions::GetUriSegment(1) ? GlobalFunctions::GetUriSegment(1).".php" : "setup.php"; ?>
 </body>
 <script src="Vendor/js/jquery-3.6.0.min.js"></script>
 <script src="Vendor/js/bootstrap.bundle.min.js"></script>
 <script src="Vendor/js/wow.min.js"></script>
 <script src="Vendor/js/odometer.min.js"></script>
 <script src="Vendor/js/main.js"></script>
-<script src="Vendor/js/<?= GlobalFunctions::GetUriSegment(1) ?>.js"></script>
+<script src="Vendor/js/<?= GlobalFunctions::GetUriSegment(1) ? GlobalFunctions::GetUriSegment(1) : "setup" ?>.js"></script>
 </html>
