@@ -66,8 +66,20 @@ function ResetCompetition(){
 }
 
 $(document).on("click", "[data-trigger=confirm-competition-reset]", function () {
-    localStorage.removeItem('teams');
-    location.reload();
+    new ajaxRequest({
+        params: {
+            method: "SaveTournamentData",
+            teams: ""
+        }}).ready(function (a) {
+        if(a.state)
+        {
+            LoadTeamsToSetupView();
+            ShowAlert("success", '<span data-translate="info_reset_success"></span>');
+        }
+        else
+            ShowAlert("danger", '<span data-translate="info_reset_failed"></span>');
+        $(document).find(".modal").modal("hide");
+    });
 });
 
 function ResetScores(){
@@ -102,48 +114,55 @@ function ToggleSettingsMenu(me) {
 }
 
 function LoadTeamsToSetupView(){
-    if(localStorage.getItem('teams')){
-        let teams = JSON.parse(localStorage.getItem('teams'));
+    new ajaxRequest({
+        params: {
+            method: "LoadTournamentData"
+        }}).ready(function (a) {
+        let tournament = JSON.parse(a.result),
+            list = $("#TeamsList");
 
-        $(document).find("input[name=competition_name]").val(teams.competition_name);
-        $(document).find("input[name=input_teams_page]").val(teams.input_teams_page);
-        $(document).find("input[name=input_tablebg_logo]").val(teams.input_tablebg_logo).trigger("input");
-        $(document).find("input[name=input_tablebg_main]").val(teams.input_tablebg_main).trigger("input");
-        $(document).find("input[name=input_table_text_color]").val(teams.input_table_text_color).trigger("input");
-        $(document).find("input[name=input_tablebg_secondary]").val(teams.input_tablebg_secondary).trigger("input");
-        $(document).find("input[name=competition_day]").val(teams.competition_day).trigger("input");
-        $(document).find("input[name=competition_match]").val(teams.competition_match).trigger("input");
-        $(document).find("select[name=input_table_map]").val(teams.input_table_map).trigger("input");
-        $(document).find(".input_tablebg_wallpaper").attr("src", teams.input_tablebg_wallpaper);
-        $(document).find("select[name=input_table_animation_in]").val(teams.input_table_animation_in);
+        list.html("");
+        if (a.result.length > 0){
+            $(document).find("input[name=competition_name]").val(tournament.competition_name);
+            $(document).find("input[name=input_teams_page]").val(tournament.input_teams_page);
+            $(document).find("input[name=input_tablebg_logo]").val(tournament.input_tablebg_logo).trigger("input");
+            $(document).find("input[name=input_tablebg_main]").val(tournament.input_tablebg_main).trigger("input");
+            $(document).find("input[name=input_table_text_color]").val(tournament.input_table_text_color).trigger("input");
+            $(document).find("input[name=input_tablebg_secondary]").val(tournament.input_tablebg_secondary).trigger("input");
+            $(document).find("input[name=competition_day]").val(tournament.competition_day).trigger("input");
+            $(document).find("input[name=competition_match]").val(tournament.competition_match).trigger("input");
+            $(document).find("select[name=input_table_map]").val(tournament.input_table_map).trigger("input");
+            $(document).find(".input_tablebg_wallpaper").attr("src", tournament.input_tablebg_wallpaper);
+            $(document).find("select[name=input_table_animation_in]").val(tournament.input_table_animation_in);
 
-        if(parseInt(teams.show_chicken_dinner) === 1 && $(document).find("input[name=show_chicken_dinner]").length > 0)
-            $(document).find("input[name=show_chicken_dinner]").prop("checked", true);
-        else
-            $(document).find("input[name=show_chicken_dinner]").prop("checked", false);
+            if(parseInt(tournament.show_chicken_dinner) === 1 && $(document).find("input[name=show_chicken_dinner]").length > 0)
+                $(document).find("input[name=show_chicken_dinner]").prop("checked", true);
+            else
+                $(document).find("input[name=show_chicken_dinner]").prop("checked", false);
 
-        if(parseInt(teams.show_matches_played) === 1 && $(document).find("input[name=show_matches_played]").length > 0)
-            $(document).find("input[name=show_matches_played]").prop("checked", true);
-        else
-            $(document).find("input[name=show_matches_played]").prop("checked", false);
+            if(parseInt(tournament.show_matches_played) === 1 && $(document).find("input[name=show_matches_played]").length > 0)
+                $(document).find("input[name=show_matches_played]").prop("checked", true);
+            else
+                $(document).find("input[name=show_matches_played]").prop("checked", false);
 
-        $.each(teams.teams, function (key, val) {
-            let root = $('<tr></tr>');
-            root.append($('<td class="w-10"><div class="squad-logo-wrapper"><input type="file" accept="image/*" class="d-none" upload-input="true"><img src="' + val.squad_logo + '" class="squad_logo sm" alt="" data-trigger="upload-logo" /></div></td>'));
-            root.append($('<td class="w-30"><input type="text" class="squad_name text-strong w-100" aria-label="" value="' + val.squad_name + '" placeholder="___________________"></td>'));
-            root.append($('<td class="w-10"><input type="number" class="matches_played text-strong text-center" value="' + val.matches_played + '" aria-label=""></td>'));
-            root.append($('<td class="w-10"><input type="number" class="chicken_dinner text-strong text-center" value="' + val.chicken_dinner + '" aria-label=""></td>'));
-            root.append($('<td class="w-10"><input type="number" class="place_points text-strong text-center" value="' + val.place_points + '" aria-label=""></td>'));
-            root.append($('<td class="w-10"><input type="number" class="total_kills text-strong text-center" value="' + val.total_kills + '" aria-label=""></td>'));
-            root.append($('<td class="w-10"><input type="number" class="total_points text-strong text-center" value="' + val.total_points + '" aria-label=""></td>'));
-            root.append($('<td class="w-10 text-right"><button class="btn btn-link" data-trigger="remove-squad" data-key="' + key + '"><i class="fas fa-times text-danger fa-2x"></i></button></td>'));
+            $.each(tournament.teams, function (key, val) {
+                let root = $('<tr></tr>');
+                root.append($('<td class="w-10"><div class="squad-logo-wrapper"><input type="file" accept="image/*" class="d-none" upload-input="true"><img src="' + val.squad_logo + '" class="squad_logo sm" alt="" data-trigger="upload-logo" /></div></td>'));
+                root.append($('<td class="w-30"><input type="text" class="squad_name text-strong w-100" aria-label="" value="' + val.squad_name + '" placeholder="___________________"></td>'));
+                root.append($('<td class="w-10"><input type="number" class="matches_played text-strong text-center" value="' + val.matches_played + '" aria-label=""></td>'));
+                root.append($('<td class="w-10"><input type="number" class="chicken_dinner text-strong text-center" value="' + val.chicken_dinner + '" aria-label=""></td>'));
+                root.append($('<td class="w-10"><input type="number" class="place_points text-strong text-center" value="' + val.place_points + '" aria-label=""></td>'));
+                root.append($('<td class="w-10"><input type="number" class="total_kills text-strong text-center" value="' + val.total_kills + '" aria-label=""></td>'));
+                root.append($('<td class="w-10"><input type="number" class="total_points text-strong text-center" value="' + val.total_points + '" aria-label=""></td>'));
+                root.append($('<td class="w-10 text-right"><button class="btn btn-link" data-trigger="remove-squad" data-key="' + key + '"><i class="fas fa-times text-danger fa-2x"></i></button></td>'));
 
-            $("#TeamsList").append(root);
-        })
-    }
+                list.append(root);
+            })
+        }
+    });
 }
 
-function SaveTeamsToLocalStorage(){
+function SaveTournamentData(){
     let competition = {
         language: GetCurrentLanguage(),
         competition_name: $(document).find("input[name=competition_name]").val(),
@@ -161,6 +180,7 @@ function SaveTeamsToLocalStorage(){
         input_table_animation_in: $(document).find("select[name=input_table_animation_in]").val(),
         teams: []
     };
+
     $.each($("#TeamsList").children(), function (key, val) {
         let team = $(this);
         let obj = {
@@ -174,8 +194,17 @@ function SaveTeamsToLocalStorage(){
         };
         competition.teams.push(obj);
     });
-    localStorage.setItem('teams', JSON.stringify(competition));
-    ShowAlert("success", '<span data-translate="info_changes_saved_success"></span>');
+
+    new ajaxRequest({
+        params: {
+            method: "SaveTournamentData",
+            teams: competition
+        }}).ready(function (a) {
+        if(a.state)
+            ShowAlert("success", '<span data-translate="info_changes_saved_success"></span>');
+        else
+            ShowAlert("danger", '<span data-translate="info_changes_saved_failed"></span>');
+    });
 }
 
 function AppendNewTeam() {
@@ -190,11 +219,6 @@ function AppendNewTeam() {
     root.append($('<td class="w-10 text-right"><button class="btn btn-link" data-trigger="remove-squad"><i class="fas fa-times text-danger fa-2x"></i></button></td>'));
 
     $("#TeamsList").append(root);
-}
-
-function ShowDownloadForm () {
-    DownloadConfiguration(localStorage.getItem("teams"), "tournament_data.json", 'application/json');
-    ShowAlert("success", '<span data-translate="info_data_download_success"></span>');
 }
 
 function ShowUploadForm () {
@@ -249,16 +273,43 @@ $(document).on("change", "input[name=json-upload]", function () {
 });
 
 $(document).on("click", "[data-trigger=confirm-upload-data]", function () {
-    localStorage.setItem('teams', JSON.stringify(tempJSON));
-    $(document).find(".modal").modal("hide");
-    LoadTeamsToSetupView();
-    ShowAlert("success", '<span data-translate="info_upload_data_success"></span>')
+    new ajaxRequest({
+        params: {
+            method: "SaveTournamentData",
+            teams: tempJSON
+        }}).ready(function () {
+        $(document).find(".modal").modal("hide");
+        LoadTeamsToSetupView();
+        ShowAlert("success", '<span data-translate="info_upload_data_success"></span>')
+    });
+});
+
+function ShowDownloadForm () {
+    let html = '';
+    html += '<div class="form-group">';
+    html += '   <label class="text-strong" data-translate="info_give_it_a_name"></label>';
+    html += '   <input class="form-control" type="text" name="json-name" aria-label=""/>';
+    html += '</div>';
+    html += '<div class="d-flex justify-content-end mt-3">';
+    html += '   <button class="btn btn-warning" data-trigger="confirm-download-data"><i class="fas fa-upload"></i> <span data-translate="btn_download"></span></button>';
+    html += '</div>';
+    ShowModal("md", html)
+}
+
+$(document).on("click", "[data-trigger=confirm-download-data]", function () {
+    new ajaxRequest({
+        params: {
+            method: "LoadTournamentData"
+        }}).ready(function (a) {
+        DownloadConfiguration(a.result, $(document).find("input[name=json-name]").val() + ".json", 'application/json');
+        $(document).find(".modal").modal("hide");
+    });
 });
 
 function DownloadConfiguration(content, fileName, contentType) {
     let a = document.createElement("a"),
         file = new Blob([content], {type: contentType});
     a.href = URL.createObjectURL(file);
-    a.download = fileName;
+    a.download = fileName.trim().replace(/\s\s+/g, ' ').replace(/ /g, "_");
     a.click();
 }

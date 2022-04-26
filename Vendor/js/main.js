@@ -127,7 +127,6 @@ function ShowAlert(type, message, block = "#ErrorBlock") {
     }, timeout)
 }
 
-
 function ShowModal(size = "md", b_content = "", v_array = {}){
     let id = GenRANDstr(25),
         modal = $('<div class="modal custom-modal animate__animated" tabindex="-1" role="dialog" id="' + id + '"></div>'),
@@ -155,3 +154,40 @@ function GetCurrentLanguage() {
     return !JSON.parse(localStorage.getItem('language')) ? "en" :
         JSON.parse(localStorage.getItem('language'));
 }
+
+let ajaxRequest = function (options) {
+    let settings = $.extend({
+            errorBlock: "#ErrorBlock",
+            preload: false,
+            preloadBlock: null,
+            preloadMessage: "",
+            params: {}
+        }, options),
+        preloadElement = null;
+
+    let buildErrorAlert = function (type, message) {
+        if(message.length === 0)
+            return false;
+
+        ShowAlert(type, message, settings.errorBlock);
+    };
+
+    this.ready = function(handleData){
+        $.ajax({
+            url: 'ajax.php',
+            type: 'post',
+            dataType: 'json',
+            data: settings.params
+        }).done(function(data) {
+            buildErrorAlert(data.type, data.body);
+            let state = data.success,
+                result = data.recv;
+
+            if(handleData)
+                handleData({state, result, preloadElement});
+
+        }).fail(function(err) {
+            console.log(err.responseJSON ? err.responseJSON.message : err.responseText);
+        })
+    };
+};

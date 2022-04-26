@@ -15,28 +15,32 @@ $(document).ready(function () {
         }
     );
     wow.init();
-    $.getJSON("tournament_data.json", function(competition){
-        if(!competition.competition_name
-            || !competition.input_tablebg_logo
-            || !competition.input_tablebg_main
-            || !competition.input_tablebg_secondary
-            || !competition.input_table_text_color
-            || !competition.input_tablebg_wallpaper
-            || !competition.input_table_animation_in
-            || !competition.teams)
-            ShowAlert("danger", '<span data-translate="error_invalid_file_structure"></span>', ".modal-error");
+    new ajaxRequest({
+        params: {
+            method: "LoadTournamentData"
+        }}).ready(function (a) {
+        let tournament = JSON.parse(a.result);
+        if(!tournament.competition_name
+            || !tournament.input_tablebg_logo
+            || !tournament.input_tablebg_main
+            || !tournament.input_tablebg_secondary
+            || !tournament.input_table_text_color
+            || !tournament.input_tablebg_wallpaper
+            || !tournament.input_table_animation_in
+            || !tournament.teams)
+            ShowAlert("danger", '<span data-translate="error_invalid_file_structure"></span>');
         else
         {
-            let language = !competition.language ? "en" : competition.language;
+            let language = !tournament.language ? "en" : tournament.language;
             localStorage.setItem('language', JSON.stringify(language));
-            c_competition = competition;
-            teams_per_page = parseInt(competition.input_teams_page);
-            let i = 0, n = competition.teams.length;
-            competition.teams.sort(function(a, b) {
+            c_competition = tournament;
+            teams_per_page = parseInt(tournament.input_teams_page);
+            let i = 0, n = tournament.teams.length;
+            tournament.teams.sort(function(a, b) {
                 return b.total_points - a.total_points;
             });
             while (i < n) {
-                teams.push(competition.teams.slice(i, i += teams_per_page));
+                teams.push(tournament.teams.slice(i, i += teams_per_page));
             }
             total_pages = teams.length;
             LoadLayout();
