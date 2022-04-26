@@ -1,34 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" sizes="256x256" href="Vendor/favicon/favicon-1.png">
-    <link rel="icon" sizes="128x128" href="Vendor/favicon/favicon-2.png">
-    <link rel="icon" sizes="64x64" href="Vendor/favicon/favicon-3.png">
-    <link rel="icon" sizes="48x48" href="Vendor/favicon/favicon-4.png">
-    <link rel="icon" sizes="32x32" href="Vendor/favicon/favicon-5.png">
-    <link rel="icon" sizes="16x16" href="Vendor/favicon/favicon-6.png">
-    <link rel="apple-touch-icon" sizes="57x57" href="Vendor/favicon/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="Vendor/favicon/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="Vendor/favicon/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="Vendor/favicon/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="Vendor/favicon/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="Vendor/favicon/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="Vendor/favicon/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="Vendor/favicon/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="Vendor/favicon/apple-touch-icon-180x180.png">
-    <title>StreamCD: PubG Room Scoreboard</title>
-    <meta name="description" content="StreamCD: PubG Room Scoreboard">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="Vendor/css/bootstrap.min.css">
-    <link rel="stylesheet" href="Vendor/css/all.min.css">
-    <link rel="stylesheet" href="Vendor/css/odometer-theme-default.css">
-    <link rel="stylesheet" href="Vendor/css/animate.min.css">
-    <link rel="stylesheet" href="Vendor/css/scoreboard.css">
-</head>
-<body>
 <div id="ErrorBlock"></div>
 <nav id="Navigation" class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand" type="button" href="">StreamCD: PubG Room Scoreboard</a>
@@ -42,7 +11,7 @@
                 <a class="nav-link" href=""><span data-translate="menu_link_homepage"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="scoreboard.html"><span data-translate="menu_link_launch_scoreboard"></span></a>
+                <a class="nav-link" href="/scoreboard"><span data-translate="menu_link_launch_scoreboard"></span></a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,7 +33,7 @@
     <div class="d-flex justify-content-end mb-3 toolbar">
         <button class="btn btn-warning mr-3" onclick="ToggleSettingsMenu(this)"><i class="fas fa-cog"></i> <span data-translate="btn_settings_menu"></span></button>
         <button class="btn btn-warning mr-3" onclick="AppendNewTeam()"><i class="fas fa-plus-circle"></i> <span data-translate="btn_append_new_team"></span></button>
-        <button class="btn btn-warning mr-3" onclick="SaveTeamsToLocalStorage()"><i class="fas fa-save"></i> <span data-translate="btn_save_changes"></span></button>
+        <button class="btn btn-warning mr-3" onclick="SaveTournamentData()"><i class="fas fa-save"></i> <span data-translate="btn_save_changes"></span></button>
         <button class="btn btn-warning mr-3" onclick="ShowDownloadForm()"><i class="fas fa-download"></i> <span data-translate="btn_download_configuration"></span></button>
         <button class="btn btn-warning mr-3" onclick="ShowUploadForm()"><i class="fas fa-upload"></i> <span data-translate="btn_upload_configuration"></span></button>
         <button class="btn btn-warning mr-3" onclick="ResetScores()"><i class="fas fa-redo"></i> <span data-translate="btn_reset_scores"></span></button>
@@ -182,11 +151,3 @@
         </table>
     </div>
 </div>
-</body>
-<script src="Vendor/js/jquery-3.6.0.min.js"></script>
-<script src="Vendor/js/bootstrap.bundle.min.js"></script>
-<script src="Vendor/js/wow.min.js"></script>
-<script src="Vendor/js/odometer.min.js"></script>
-<script src="Vendor/js/main.js"></script>
-<script src="Vendor/js/setup.js"></script>
-</html>

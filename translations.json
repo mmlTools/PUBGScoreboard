@@ -102,6 +102,10 @@
     "ro" :  "Configurația a fost încărcată cu succes iar tabela a fost resetată cu datele recent încărcate.",
     "en":  "The configuration was successfully uploaded and the table was reset with the recently uploaded data."
   },
+  "info_give_it_a_name" : {
+    "ro" :  "Pentru a salva fișierul de configurare curent pe unitatea locală, dați-i un nume. Acest fișier conține toate informațiile despre turneu, pe care le veți putea încărca în panoul de configurare, precum și previzualizarea mai târziu.",
+    "en":  "To save the current configuration file to your local drive, give it a name. This file contains all tournament information, which you will be able to upload to the setup panel as well as the preview later."
+  },
   "input_competition_name" : {
     "ro" :  "Denumirea competiției",
     "en":  "Competition title"
