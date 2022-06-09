@@ -81,7 +81,7 @@ function GenRANDstr(length) {
 }
 
 function Translate(){
-    $.getJSON("translations.json", function(data){
+    $.getJSON("Autoload/translations.json", function(data){
         $.each($("[data-translate]"), function (k, v) {
             let language = !JSON.parse(localStorage.getItem('language')) ? "en" :
                             JSON.parse(localStorage.getItem('language'));
@@ -174,7 +174,7 @@ let ajaxRequest = function (options) {
 
     this.ready = function(handleData){
         $.ajax({
-            url: 'ajax.php',
+            url: '/Engine/AjaxController.php',
             type: 'post',
             dataType: 'json',
             data: settings.params

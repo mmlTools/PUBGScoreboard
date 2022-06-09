@@ -19,35 +19,27 @@ $(document).ready(function () {
         params: {
             method: "LoadTournamentData"
         }}).ready(function (a) {
-        let tournament = JSON.parse(a.result);
-        if(!tournament.competition_name
-            || !tournament.input_tablebg_logo
-            || !tournament.input_tablebg_main
-            || !tournament.input_tablebg_secondary
-            || !tournament.input_table_text_color
-            || !tournament.input_tablebg_wallpaper
-            || !tournament.input_table_animation_in
-            || !tournament.teams)
-            ShowAlert("danger", '<span data-translate="error_invalid_file_structure"></span>');
-        else
-        {
-            let language = !tournament.language ? "en" : tournament.language;
-            localStorage.setItem('language', JSON.stringify(language));
-            c_competition = tournament;
-            teams_per_page = parseInt(tournament.input_teams_page);
-            let i = 0, n = tournament.teams.length;
-            tournament.teams.sort(function(a, b) {
-                return b.total_points - a.total_points;
-            });
-            while (i < n) {
-                teams.push(tournament.teams.slice(i, i += teams_per_page));
-            }
-            total_pages = teams.length;
-            LoadLayout();
+        let tournament = JSON.parse(a.result),
+            language = !tournament.language ? "en" : tournament.language;
+
+        if(!tournament.teams)
+            tournament.teams = [];
+
+        localStorage.setItem('language', JSON.stringify(language));
+        c_competition = tournament;
+        teams_per_page = isNaN(parseInt(tournament.input_teams_page)) ? 4 : parseInt(tournament.input_teams_page);
+
+        let i = 0, n = tournament.teams.length;
+        tournament.teams.sort(function(a, b) {
+            return b.total_points - a.total_points;
+        });
+        while (i < n) {
+            teams.push(tournament.teams.slice(i, i += teams_per_page));
         }
-    }).fail(function(e){
-        console.log("An error has occurred.");
-    });
+        total_pages = teams.length;
+        LoadLayout();
+
+    })
 });
 
 $(document).on("keydown", function(e) {
@@ -90,6 +82,10 @@ function LoadLayout(){
     $(document).find(".competition_map").html(c_competition.input_table_map);
     $(document).find(".competition_day").html('<span data-translate="competition_day"></span>: ' + c_competition.competition_day);
     $(document).find(".competition_match").html('<span data-translate="competition_match"></span>: ' + c_competition.competition_match);
+
+    if(c_competition.input_tablebg_wallpaper === "Vendor/img/upload-logo.png")
+    $(document).find("body").css({background: "#fff"});
+    else
     $(document).find("body").css({
         background: "url(" + c_competition.input_tablebg_wallpaper + ") no-repeat",
         backgroundSize: "cover",
@@ -104,6 +100,8 @@ function LoadLayout(){
 function LoadTeamsToSetupView(){
     let page = page_index - 1;
     let competition = teams[page];
+
+    console.log(teams);
 
     $("#TeamsList").html("");
     $.each(competition, function (key, val) {

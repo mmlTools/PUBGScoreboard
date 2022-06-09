@@ -1,7 +1,6 @@
-<?php
-namespace App\Controllers;
+<?php namespace Engine;
 
-class ajax
+class AjaxController
 {
     private
         $received = [],
@@ -36,7 +35,7 @@ class ajax
 
     private function SaveTournamentData(){
         try{
-            file_put_contents("tournament_data.json", json_encode($this->received["teams"]));
+            file_put_contents("../Autoload/tournament_data.json", json_encode($this->received["teams"]));
             $this->ParseResult(true);
         } catch (\Exception $e){
             $this->ParseResult(false);
@@ -45,7 +44,7 @@ class ajax
 
     private function LoadTournamentData(){
         try{
-            $content = file_get_contents("tournament_data.json");
+            $content = file_get_contents("../Autoload/tournament_data.json");
             $this->ParseResult(true, null, null, $content);
         } catch (\Exception $e){
             $this->ParseResult(false);
@@ -63,4 +62,4 @@ class ajax
     }
 }
 
-return new ajax();
+return new AjaxController();
