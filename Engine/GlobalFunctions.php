@@ -13,12 +13,14 @@ class GlobalFunctions{
     }
 
     /**
-     * @param $extension
+     * @param string $extension
      * @return string
      */
-    public static function GetPath($extension){
+    public static function GetPath($extension = ""){
+        $extension = strlen($extension) == 0 ? ".php" : $extension;
+
        return GlobalFunctions::GetUriSegment(1) ?
-           (file_exists(GlobalFunctions::GetUriSegment(1).$extension) ? GlobalFunctions::GetUriSegment(1).$extension : "setup$extension") :
+           (file_exists(GlobalFunctions::GetUriSegment(1).".php") ? GlobalFunctions::GetUriSegment(1).$extension : "setup$extension") :
            "setup$extension";
     }
 }

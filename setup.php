@@ -18,9 +18,9 @@
                     <img class="c-language mr-2"/> <span data-translate="menu_link_language"></span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item d-flex align-items-center" href="#" set-language="ro"><img src="Vendordor/img/flags/ro.gif"/> <span class="ml-3" data-translate="language_name_ro"></span></a>
+                    <a class="dropdown-item d-flex align-items-center" href="#" set-language="ro"><img src="Vendor/img/flags/ro.gif"/> <span class="ml-3" data-translate="language_name_ro"></span></a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item d-flex align-items-center" href="#" set-language="en"><img src="Vendordor/img/flags/gb.gif"/> <span class="ml-3" data-translate="language_name_en"></span></a>
+                    <a class="dropdown-item d-flex align-items-center" href="#" set-language="en"><img src="Vendor/img/flags/gb.gif"/> <span class="ml-3" data-translate="language_name_en"></span></a>
                 </div>
             </li>
             <li class="nav-item">
