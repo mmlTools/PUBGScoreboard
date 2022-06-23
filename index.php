@@ -26,19 +26,19 @@ use Engine\GlobalFunctions;
     <title>StreamCD: PubG Room Scoreboard</title>
     <meta name="description" content="StreamCD: PubG Room Scoreboard">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="Vendordor/css/bootstrap.min.css">
-    <link rel="stylesheet" href="Vendordor/css/all.min.css">
-    <link rel="stylesheet" href="Vendordor/css/odometer-theme-default.css">
-    <link rel="stylesheet" href="Vendordor/css/animate.min.css">
+    <link rel="stylesheet" href="Vendor/css/bootstrap.min.css">
+    <link rel="stylesheet" href="Vendor/css/all.min.css">
+    <link rel="stylesheet" href="Vendor/css/odometer-theme-default.css">
+    <link rel="stylesheet" href="Vendor/css/animate.min.css">
     <link rel="stylesheet" href="Vendor/css/scoreboard.css">
 </head>
 <body>
-<?php include GlobalFunctions::GetUriSegment(1) ? GlobalFunctions::GetUriSegment(1).".php" : "setup.php"; ?>
+<?php include GlobalFunctions::GetPath(".php") ?>
 </body>
-<script src="Vendordor/js/jquery-3.6.0.min.js"></script>
-<script src="Vendordor/js/bootstrap.bundle.min.js"></script>
-<script src="Vendordor/js/wow.min.js"></script>
-<script src="Vendordor/js/odometer.min.js"></script>
-<script src="Vendordor/js/main.js"></script>
-<script src="Vendor/js/<?= GlobalFunctions::GetUriSegment(1) ? GlobalFunctions::GetUriSegment(1) : "setup" ?>.js"></script>
+<script src="Vendor/js/jquery-3.6.0.min.js"></script>
+<script src="Vendor/js/bootstrap.bundle.min.js"></script>
+<script src="Vendor/js/wow.min.js"></script>
+<script src="Vendor/js/odometer.min.js"></script>
+<script src="Vendor/js/main.js"></script>
+<script src="Vendor/js/<?= GlobalFunctions::GetPath(".js") ?>"></script>
 </html>
