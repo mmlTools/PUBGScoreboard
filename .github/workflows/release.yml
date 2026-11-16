@@ -1,23 +1,34 @@
 name: Release
 
 # Publishing a version:
-#   1. set "_VERSION" in about.json (for example "v2.1.0") and commit
-#   2. git tag v2.1.0 && git push origin v2.1.0
+#   1. set "_VERSION" in about.json (for example "v2.1.0")
+#   2. commit and push to main
 #
-# The workflow tests the code, builds two packages, boots the Windows portable
-# package on a real Windows runner, and only then publishes the GitHub release:
+# Every push to main checks whether that version already has a tag. If it has
+# none, the workflow tests the code, builds two packages, boots the Windows
+# portable package on a real Windows runner, and only then creates the tag and
+# publishes the GitHub release with the packages attached:
 #
 #   PUBGScoreboard-<version>.zip                    for PHP 7.4+ / Apache / XAMPP users
 #   PUBGScoreboard-<version>-windows-portable.zip   PHP included: unzip, run Start.bat
 #
-# Run it by hand (Actions → Release → Run workflow) to build the packages
-# without publishing; they are attached to the run as an artifact.
+# A push that does not bring a new version releases nothing (CI still runs).
+#
+# Run it by hand (Actions → Release → Run workflow) to do the same without a
+# push. Untick "publish" there to only build the packages; they are attached to
+# the run as an artifact. Pushing a tag yourself (git tag v2.1.0 && git push
+# origin v2.1.0) also still publishes it.
 
 on:
   push:
+    branches: [main]
     tags: ['v[0-9]+.[0-9]+.[0-9]+']
   workflow_dispatch:
     inputs:
+      publish:
+        description: Create the tag and publish the release (untick to only build the packages)
+        type: boolean
+        default: true
       php_series:
         description: PHP series bundled into the Windows portable package
         default: '8.4'
@@ -27,39 +38,96 @@ permissions:
   contents: read
 
 concurrency:
-  group: release-${{ github.ref }}
+  group: release
   cancel-in-progress: false
 
 env:
   PHP_SERIES: ${{ inputs.php_series || '8.4' }}
 
 jobs:
+  plan:
+    name: Check the version
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      version: ${{ steps.plan.outputs.version }}
+      build: ${{ steps.plan.outputs.build }}
+      publish: ${{ steps.plan.outputs.publish }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Decide what to do
+        id: plan
+        env:
+          PUBLISH_INPUT: ${{ inputs.publish }} # empty unless the workflow was run by hand
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          # Single source of truth for the version: about.json ("_VERSION": "v2.0.0")
+          tag="$(jq -r '._VERSION' about.json)"
+          if [[ ! "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error file=about.json::_VERSION must look like v1.2.3 (found: $tag)"
+            exit 1
+          fi
+
+          publish=true
+          why=""
+          if [[ "$GITHUB_REF_TYPE" == "tag" ]]; then
+            if [[ "$GITHUB_REF_NAME" != "$tag" ]]; then
+              echo "::error file=about.json::Tag $GITHUB_REF_NAME does not match about.json ($tag). Update _VERSION, commit, and move the tag."
+              exit 1
+            fi
+          else
+            # --exit-code: 0 = the tag exists, 2 = it does not, anything else = the lookup failed
+            found=0
+            git ls-remote --exit-code --tags origin "refs/tags/$tag" > /dev/null || found=$?
+            if [[ "$found" -eq 0 ]]; then
+              publish=false
+              why="$tag is already released. To publish a new version, change _VERSION in about.json."
+            elif [[ "$found" -ne 2 ]]; then
+              echo "::error::Could not read the tags of this repository (git ls-remote exited with $found)"
+              exit 1
+            elif [[ "$GITHUB_REF_NAME" != "$DEFAULT_BRANCH" ]]; then
+              publish=false
+              why="Releases are only published from $DEFAULT_BRANCH, not from $GITHUB_REF_NAME."
+            fi
+          fi
+          if [[ "$publish" == "true" && "$PUBLISH_INPUT" == "false" ]]; then
+            publish=false
+            why="Publishing was switched off for this run."
+          fi
+
+          # A push without a new version has nothing to build; a run by hand always builds.
+          build=true
+          if [[ "$publish" == "false" && "$GITHUB_EVENT_NAME" == "push" ]]; then
+            build=false
+          fi
+
+          if [[ "$publish" == "true" ]]; then
+            echo "::notice::Releasing $tag from commit ${GITHUB_SHA::7}"
+          elif [[ "$build" == "true" ]]; then
+            echo "::notice::$why Building the packages without publishing."
+          else
+            echo "::notice::$why Nothing to do."
+          fi
+
+          {
+            echo "version=${tag#v}"
+            echo "build=$build"
+            echo "publish=$publish"
+          } >> "$GITHUB_OUTPUT"
+
   test:
+    needs: plan
+    if: needs.plan.outputs.build == 'true'
     uses: ./.github/workflows/ci.yml
 
   build:
     name: Build packages
-    needs: test
+    needs: [plan, test]
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    outputs:
-      version: ${{ steps.version.outputs.version }}
     steps:
       - uses: actions/checkout@v7
-
-      - name: Read version
-        id: version
-        run: |
-          version="$(jq -r '._VERSION' about.json)"
-          if [[ ! "$version" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "::error file=about.json::_VERSION must look like v1.2.3 (found: $version)"
-            exit 1
-          fi
-          if [[ "$GITHUB_REF_TYPE" == "tag" && "$GITHUB_REF_NAME" != "$version" ]]; then
-            echo "::error file=about.json::Tag $GITHUB_REF_NAME does not match about.json ($version). Update _VERSION, commit, and move the tag."
-            exit 1
-          fi
-          echo "version=${version#v}" >> "$GITHUB_OUTPUT"
 
       - name: Download PHP ${{ env.PHP_SERIES }} for Windows
         run: |
@@ -85,7 +153,7 @@ jobs:
       - name: Summary
         run: |
           {
-            echo "### PUBG Scoreboard ${{ steps.version.outputs.version }}"
+            echo "### PUBG Scoreboard ${{ needs.plan.outputs.version }}"
             echo
             echo "Bundled runtime: \`$PHP_ZIP\`"
             echo
@@ -106,7 +174,7 @@ jobs:
 
   verify-windows:
     name: Boot the portable package on Windows
-    needs: build
+    needs: [plan, build]
     runs-on: windows-latest
     timeout-minutes: 10
     steps:
@@ -125,7 +193,7 @@ jobs:
       - name: Unpack exactly what users will download
         shell: pwsh
         run: |
-          $zip = Get-Item "dist/PUBGScoreboard-${{ needs.build.outputs.version }}-windows-portable.zip"
+          $zip = Get-Item "dist/PUBGScoreboard-${{ needs.plan.outputs.version }}-windows-portable.zip"
           Expand-Archive -Path $zip -DestinationPath portable
           $app = Join-Path $PWD 'portable/PUBGScoreboard'
 
@@ -155,9 +223,9 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Server tests failed with the bundled PHP' }
 
   publish:
-    name: Publish GitHub release
-    needs: [build, verify-windows]
-    if: github.ref_type == 'tag'
+    name: Tag and publish the GitHub release
+    needs: [plan, build, verify-windows]
+    if: needs.plan.outputs.publish == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
@@ -170,7 +238,10 @@ jobs:
 
       - uses: softprops/action-gh-release@v3
         with:
-          name: PUBG Scoreboard ${{ needs.build.outputs.version }}
+          # Creates the tag on the commit that was tested and packaged, unless it was pushed by hand.
+          tag_name: v${{ needs.plan.outputs.version }}
+          target_commitish: ${{ github.sha }}
+          name: PUBG Scoreboard ${{ needs.plan.outputs.version }}
           files: dist/*
           fail_on_unmatched_files: true
           generate_release_notes: true
@@ -180,8 +251,8 @@ jobs:
 
             | Package | For |
             | --- | --- |
-            | **`PUBGScoreboard-${{ needs.build.outputs.version }}-windows-portable.zip`** | Windows streaming PCs. PHP is included — unzip anywhere and double-click **Start.bat**. |
-            | `PUBGScoreboard-${{ needs.build.outputs.version }}.zip` | macOS / Linux (`./start.sh`), or an existing PHP 7.4+ / Apache / XAMPP setup. |
+            | **`PUBGScoreboard-${{ needs.plan.outputs.version }}-windows-portable.zip`** | Windows streaming PCs. PHP is included — unzip anywhere and double-click **Start.bat**. |
+            | `PUBGScoreboard-${{ needs.plan.outputs.version }}.zip` | macOS / Linux (`./start.sh`), or an existing PHP 7.4+ / Apache / XAMPP setup. |
 
             Then add `http://localhost:8080/scoreboard` to OBS as a **Browser** source (1920 × 1080) — or connect the control panel to OBS and let it do that for you.
 

@@ -124,7 +124,7 @@ node tests/server.mjs    # boots server.php and tests HTTP + WebSocket end to en
 
 **Translations** are in `Autoload/translations.json` (`key → { "en": …, "ro": … }`). To add a language, add its code to every entry, to `Store::LANGUAGES` in `Engine/Store.php`, and a button in `Views/control.html`.
 
-**Releasing:** set `_VERSION` in `about.json`, commit, then `git tag v2.1.0 && git push origin v2.1.0`. The [release workflow](.github/workflows/release.yml) runs the tests, builds both packages, boots the Windows portable package on a Windows runner, and publishes the GitHub release with checksums.
+**Releasing:** set `_VERSION` in `about.json` (for example `v2.1.0`), commit and push to `main`. The [release workflow](.github/workflows/release.yml) sees that the version has no tag yet, runs the tests, builds both packages, boots the Windows portable package on a Windows runner, then creates the `v2.1.0` tag and publishes the GitHub release with the packages and their checksums. Pushes that do not change the version release nothing.
 
 ## Credits and license
 
