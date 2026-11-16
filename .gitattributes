@@ -1,2 +1,17 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Launchers must keep their native line endings to run
+*.bat text eol=crlf
+*.sh  text eol=lf
+
+*.woff2 binary
+*.png   binary
+*.gif   binary
+*.ico   binary
+
+# Left out of release packages (`git archive`, see .github/workflows/release.yml)
+/.github        export-ignore
+/tests          export-ignore
+/.gitattributes export-ignore
+/.gitignore     export-ignore

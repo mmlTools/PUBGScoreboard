@@ -1,9 +1,9 @@
 {
   "author": "Marco Maxim",
   "website": "https://streamcd.net",
-  "_CHANGELOG": "Released the project alpha version",
-  "_VERSION": "v0.0.1",
-  "_RELEASE": "Alpha",
+  "_CHANGELOG": "Complete rebuild: live WebSocket sync, OBS Studio integration and remote control, new PUBG-styled overlays and animations, match recording with automatic scoring, undo, portable Windows package.",
+  "_VERSION": "v2.0.0",
+  "_RELEASE": "Stable",
   "_VIRUSTOTAL": "https://www.virustotal.com/gui/url/2cb4d27b2a60d9ad1667a36dbb9b940ce8b4aa356f638442dfdc79ff003f094a?nocache=1",
-  "_DATE": "1650812670"
+  "_DATE": "1794787200"
 }

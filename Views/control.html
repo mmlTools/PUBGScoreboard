@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>PUBG Scoreboard — Control Panel</title>
+    <meta name="description" content="Live tournament scoreboard for PUBG streams, with OBS Studio integration.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0b0d10">
+    <link rel="shortcut icon" href="{{BASE}}favicon.ico">
+    <link rel="icon" sizes="256x256" href="{{BASE}}Vendor/favicon/favicon-1.png">
+    <link rel="icon" sizes="64x64" href="{{BASE}}Vendor/favicon/favicon-3.png">
+    <link rel="icon" sizes="32x32" href="{{BASE}}Vendor/favicon/favicon-5.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{BASE}}Vendor/favicon/apple-touch-icon-180x180.png">
+    <link rel="stylesheet" href="{{BASE}}Vendor/css/fonts.css?v={{VERSION}}">
+    <link rel="stylesheet" href="{{BASE}}Vendor/css/control.css?v={{VERSION}}">
+</head>
+<body>
+
+<svg xmlns="http://www.w3.org/2000/svg" class="sprite" aria-hidden="true">
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4m0 0h11l-2 4 2 4H5"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 14 4 9l5-5M4 9h10a6 6 0 0 1 0 12h-3"/></symbol>
+    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4m0 0L7 9m5-5 5 5M4 17v3h16v-3"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v12m0 0 5-5m-5 5-5-5M4 17v3h16v-3"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 4v6h6M20 20v-6h-6M5.5 15a7 7 0 0 0 12.4 2M18.5 9A7 7 0 0 0 6.1 7"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 13h10l1-13M9 7V4h6v3"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 5.1A10.6 10.6 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4M6.5 6.6A16.6 16.6 0 0 0 2 12s3.6 7 10 7a10 10 0 0 0 4.3-1M9.9 9.900a3 3 0 0 0 4.2 4.2"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="1"/><path d="M5 15H4V4h11v1"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M10 6H4v14h14v-6"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8V4Z"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 4h8v6a4 4 0 0 1-8 0V4ZM8 6H4v1a4 4 0 0 0 4 4M16 6h4v1a4 4 0 0 1-4 4M12 14v4M8 20h8"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="m3 16 5-5 4 4 3-3 6 6"/><circle cx="15.5" cy="8.5" r="1.5"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.700l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.700l1-1"/></symbol>
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M4 9h13v6a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9ZM17 10h1.500a2.5 2.5 0 0 1 0 5H17M8 3v3m4-3v3"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-side" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="1"/><path d="M6 8h4M6 12h4M6 16h4"/></symbol>
+    <symbol id="i-podium" viewBox="0 0 24 24"><path d="M9 20V8h6v12M3 20v-8h6M15 20v-5h6v5M2 20h20"/></symbol>
+</svg>
+
+<header class="topbar">
+    <a class="brand" href="{{BASE}}">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M4 4h26l6 6v26H10l-6-6V4Z"/><path class="m" d="M11 11.5h18v4.5H11zM11 18h13v4.5H11zM11 24.5h8V29h-8z"/></svg></span>
+        <span class="brand-text">
+            <span class="brand-name">PUBG <b>Scoreboard</b></span>
+            <span class="brand-by">by StreamCD · v{{VERSION}}</span>
+        </span>
+    </a>
+
+    <div class="status" id="status">
+        <span class="pill" id="pill-server" data-state="wait"><i></i><span class="pill-text">…</span></span>
+        <span class="pill" id="pill-overlay" data-state="off" hidden><i></i><span class="pill-text"></span></span>
+        <span class="pill" id="pill-obs" data-state="off"><i></i><span class="pill-text">OBS</span></span>
+        <span class="pill quiet" id="pill-save" data-state="ok"><i></i><span class="pill-text"></span></span>
+    </div>
+
+    <nav class="top-actions">
+        <a class="btn ghost" id="open-overlay" href="{{BASE}}scoreboard?preview=1" target="_blank" rel="noopener">
+            <svg><use href="#i-external"/></svg><span data-i18n="open_overlay"></span>
+        </a>
+        <div class="lang" role="group" aria-label="Language">
+            <button type="button" data-lang="en"><img src="{{BASE}}Vendor/img/flags/gb.gif" alt="">EN</button>
+            <button type="button" data-lang="ro"><img src="{{BASE}}Vendor/img/flags/ro.gif" alt="">RO</button>
+        </div>
+        <a class="btn ghost icon-only" href="https://ko-fi.com/streamcd" target="_blank" rel="noopener" data-i18n-title="donate_coffee">
+            <svg><use href="#i-coffee"/></svg>
+        </a>
+    </nav>
+</header>
+
+<div class="banner" id="auth-banner" hidden>
+    <span data-i18n="auth_needed"></span>
+</div>
+
+<main class="layout">
+
+    <!-- ============================ LEFT: tournament + teams ============================ -->
+    <section class="main">
+
+        <div class="card tournament">
+            <div class="field grow-3">
+                <label for="f-name" data-i18n="tournament_name"></label>
+                <input id="f-name" class="input big" type="text" maxlength="80" autocomplete="off" data-bind="tournament.name">
+            </div>
+            <div class="field grow-1">
+                <label for="f-map" data-i18n="map"></label>
+                <input id="f-map" class="input big" type="text" maxlength="30" list="maps" autocomplete="off" data-bind="tournament.map">
+                <datalist id="maps">
+                    <option value="Erangel"><option value="Miramar"><option value="Taego"><option value="Vikendi">
+                    <option value="Deston"><option value="Rondo"><option value="Sanhok"><option value="Karakin">
+                    <option value="Paramo"><option value="Haven"><option value="Livik"><option value="Nusa">
+                </datalist>
+            </div>
+            <div class="field narrow">
+                <label for="f-day" data-i18n="day"></label>
+                <input id="f-day" class="input big center" type="text" maxlength="12" autocomplete="off" data-bind="tournament.day">
+            </div>
+            <div class="field narrow">
+                <label for="f-match" data-i18n="match"></label>
+                <input id="f-match" class="input big center" type="text" maxlength="12" autocomplete="off" data-bind="tournament.match">
+            </div>
+        </div>
+
+        <div class="card teams">
+            <div class="card-head">
+                <h2><span data-i18n="teams"></span> <span class="count" id="team-count">0</span></h2>
+                <div class="toolbar">
+                    <button type="button" class="btn primary" id="btn-add"><svg><use href="#i-plus"/></svg><span data-i18n="add_team"></span></button>
+                    <button type="button" class="btn primary" id="btn-match"><svg><use href="#i-flag"/></svg><span data-i18n="record_match"></span></button>
+                    <span class="sep"></span>
+                    <button type="button" class="btn" id="btn-undo" disabled><svg><use href="#i-undo"/></svg><span data-i18n="undo"></span></button>
+                    <button type="button" class="btn" id="btn-import"><svg><use href="#i-upload"/></svg><span data-i18n="import"></span></button>
+                    <a class="btn" id="btn-export" href="{{BASE}}api/export" download><svg><use href="#i-download"/></svg><span data-i18n="export"></span></a>
+                    <button type="button" class="btn danger" id="btn-reset-scores"><svg><use href="#i-reset"/></svg><span data-i18n="reset_scores"></span></button>
+                    <button type="button" class="btn danger" id="btn-reset-all"><svg><use href="#i-trash"/></svg><span data-i18n="reset_tournament"></span></button>
+                </div>
+            </div>
+
+            <div class="table-wrap" id="teams-wrap">
+                <table class="teams-table">
+                    <thead>
+                    <tr>
+                        <th class="t-rank">#</th>
+                        <th class="t-logo" data-i18n="logo"></th>
+                        <th class="t-name" data-i18n="team_name"></th>
+                        <th class="t-tag" data-i18n="tag"></th>
+                        <th class="t-num" data-i18n="col_matches"></th>
+                        <th class="t-num" data-i18n="col_wwcd"></th>
+                        <th class="t-num" data-i18n="col_place"></th>
+                        <th class="t-num" data-i18n="col_kills"></th>
+                        <th class="t-num t-total" data-i18n="col_total"></th>
+                        <th class="t-act"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="teams"></tbody>
+                </table>
+            </div>
+
+            <div class="empty" id="teams-empty" hidden>
+                <div class="empty-mark"><svg><use href="#i-trophy"/></svg></div>
+                <h3 data-i18n="empty_title"></h3>
+                <p data-i18n="empty_text"></p>
+                <div class="empty-actions">
+                    <button type="button" class="btn primary" id="btn-add-empty"><svg><use href="#i-plus"/></svg><span data-i18n="add_team"></span></button>
+                    <button type="button" class="btn" id="btn-demo"><svg><use href="#i-play"/></svg><span data-i18n="load_demo"></span></button>
+                </div>
+            </div>
+
+            <p class="hint" id="teams-hint" data-i18n="teams_hint"></p>
+        </div>
+    </section>
+
+    <!-- ============================ RIGHT: on air + settings ============================ -->
+    <aside class="side">
+
+        <div class="card live">
+            <div class="preview" id="preview">
+                <iframe id="preview-frame" title="Overlay preview" src="{{BASE}}scoreboard?preview=1&amp;panel=1" tabindex="-1" loading="eager"></iframe>
+                <span class="preview-tag" id="preview-tag"></span>
+                <button type="button" class="btn sm preview-replay" id="btn-replay" data-i18n-title="replay_animation"><svg><use href="#i-play"/></svg><span data-i18n="replay"></span></button>
+            </div>
+
+            <button type="button" class="onair" id="btn-onair" aria-pressed="false">
+                <i class="onair-light"></i>
+                <span class="onair-text" id="onair-text"></span>
+                <span class="onair-hint" id="onair-hint"></span>
+            </button>
+
+            <div class="seg" id="views" role="group">
+                <button type="button" data-view="leaderboard"><svg><use href="#i-list"/></svg><span data-i18n="view_leaderboard"></span></button>
+                <button type="button" data-view="compact"><svg><use href="#i-side"/></svg><span data-i18n="view_compact"></span></button>
+                <button type="button" data-view="podium"><svg><use href="#i-podium"/></svg><span data-i18n="view_podium"></span></button>
+                <button type="button" data-view="winner"><svg><use href="#i-trophy"/></svg><span data-i18n="view_winner"></span></button>
+            </div>
+
+            <div class="row" id="winner-row" hidden>
+                <label for="f-winner" data-i18n="winner_team"></label>
+                <select id="f-winner" class="input"></select>
+            </div>
+
+            <div class="row" id="pager-row">
+                <div class="pager-ctl">
+                    <button type="button" class="btn icon-only" id="btn-prev" data-i18n-title="prev_page"><svg><use href="#i-left"/></svg></button>
+                    <span class="page-num" id="page-num">1 / 1</span>
+                    <button type="button" class="btn icon-only" id="btn-next" data-i18n-title="next_page"><svg><use href="#i-right"/></svg></button>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="f-rotate">
+                    <i></i><span data-i18n="auto_rotate"></span>
+                </label>
+                <label class="inline-num">
+                    <input type="number" id="f-rotate-sec" class="input sm center" min="3" max="120" step="1">
+                    <span data-i18n="seconds_short"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="card tabs-card">
+            <div class="tabs" role="tablist">
+                <button type="button" role="tab" data-tab="obs" class="on">OBS</button>
+                <button type="button" role="tab" data-tab="design" data-i18n="tab_design"></button>
+                <button type="button" role="tab" data-tab="scoring" data-i18n="tab_scoring"></button>
+                <button type="button" role="tab" data-tab="remote" data-i18n="tab_remote"></button>
+            </div>
+
+            <!-- ---------- OBS ---------- -->
+            <div class="tab-panel on" data-panel="obs">
+                <div class="row stack">
+                    <label for="f-source-url" data-i18n="browser_source_url"></label>
+                    <div class="copy-field">
+                        <input id="f-source-url" class="input mono" type="text" readonly>
+                        <button type="button" class="btn icon-only" data-copy="#f-source-url" data-i18n-title="copy"><svg><use href="#i-copy"/></svg></button>
+                    </div>
+                    <p class="hint" data-i18n="browser_source_hint"></p>
+                </div>
+
+                <div class="divider"><span data-i18n="obs_remote_title"></span></div>
+
+                <form id="obs-form" class="obs-form" autocomplete="off">
+                    <div class="field grow-3">
+                        <label for="obs-host" data-i18n="obs_host"></label>
+                        <input id="obs-host" class="input" type="text" spellcheck="false" placeholder="localhost">
+                    </div>
+                    <div class="field narrow">
+                        <label for="obs-port" data-i18n="obs_port"></label>
+                        <input id="obs-port" class="input" type="number" min="1" max="65535" placeholder="4455">
+                    </div>
+                    <div class="field full">
+                        <label for="obs-password" data-i18n="obs_password"></label>
+                        <input id="obs-password" class="input" type="password" autocomplete="new-password">
+                    </div>
+                    <button type="submit" class="btn primary full" id="obs-connect"><svg><use href="#i-link"/></svg><span data-i18n="obs_connect"></span></button>
+                    <p class="hint full" data-i18n="obs_hint"></p>
+                </form>
+
+                <div id="obs-live" hidden>
+                    <div class="obs-status">
+                        <div>
+                            <strong id="obs-version"></strong>
+                            <span class="obs-flags">
+                                <span class="flag" id="obs-streaming" data-on="0">LIVE</span>
+                                <span class="flag" id="obs-recording" data-on="0">REC</span>
+                            </span>
+                        </div>
+                        <button type="button" class="btn sm" id="obs-disconnect" data-i18n="obs_disconnect"></button>
+                    </div>
+
+                    <label class="label" data-i18n="obs_scenes"></label>
+                    <div class="scenes" id="obs-scenes"></div>
+
+                    <label class="label" data-i18n="obs_source"></label>
+                    <div class="btn-grid">
+                        <button type="button" class="btn" id="obs-add"><svg><use href="#i-plus"/></svg><span data-i18n="obs_add_source"></span></button>
+                        <button type="button" class="btn" id="obs-refresh"><svg><use href="#i-reset"/></svg><span data-i18n="obs_refresh_source"></span></button>
+                    </div>
+                    <label class="switch block" id="obs-visible-row" hidden>
+                        <input type="checkbox" id="obs-visible">
+                        <i></i><span data-i18n="obs_source_visible"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- ---------- Design ---------- -->
+            <div class="tab-panel" data-panel="design">
+                <div class="row">
+                    <label for="f-animation" data-i18n="animation_style"></label>
+                    <select id="f-animation" class="input" data-bind="theme.animation">
+                        <option value="tactical" data-i18n="anim_tactical"></option>
+                        <option value="airdrop" data-i18n="anim_airdrop"></option>
+                        <option value="flip" data-i18n="anim_flip"></option>
+                        <option value="punch" data-i18n="anim_punch"></option>
+                        <option value="fade" data-i18n="anim_fade"></option>
+                    </select>
+                </div>
+                <div class="row">
+                    <label for="f-per-page" data-i18n="teams_per_page"></label>
+                    <input id="f-per-page" class="input sm center" type="number" min="1" max="20" data-bind="theme.teamsPerPage">
+                </div>
+                <div class="row">
+                    <span class="label" data-i18n="colors"></span>
+                    <div class="swatches">
+                        <label class="swatch" data-i18n-title="color_accent"><input type="color" data-bind="theme.accent"><span data-i18n="color_accent"></span></label>
+                        <label class="swatch" data-i18n-title="color_surface"><input type="color" data-bind="theme.surface"><span data-i18n="color_surface"></span></label>
+                        <label class="swatch" data-i18n-title="color_text"><input type="color" data-bind="theme.text"><span data-i18n="color_text"></span></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label" data-i18n="columns"></span>
+                    <div class="checks">
+                        <label class="switch"><input type="checkbox" data-bind="theme.showMatches"><i></i><span data-i18n="col_matches"></span></label>
+                        <label class="switch"><input type="checkbox" data-bind="theme.showWwcd"><i></i><span data-i18n="col_wwcd"></span></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="f-side" data-i18n="compact_side"></label>
+                    <select id="f-side" class="input" data-bind="theme.compactSide">
+                        <option value="left" data-i18n="side_left"></option>
+                        <option value="right" data-i18n="side_right"></option>
+                    </select>
+                </div>
+                <div class="divider"><span data-i18n="images"></span></div>
+                <div class="row">
+                    <span class="label" data-i18n="tournament_logo"></span>
+                    <div class="image-pick" data-image="tournament.logo" data-max="512">
+                        <button type="button" class="thumb" data-i18n-title="choose_image"><svg><use href="#i-image"/></svg></button>
+                        <button type="button" class="btn sm clear" data-i18n="remove"></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <span class="label" data-i18n="wallpaper"></span>
+                    <div class="image-pick" data-image="theme.wallpaper" data-max="1920" data-jpeg="1">
+                        <button type="button" class="thumb wide" data-i18n-title="choose_image"><svg><use href="#i-image"/></svg></button>
+                        <button type="button" class="btn sm clear" data-i18n="remove"></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <label for="f-background" data-i18n="background"></label>
+                    <select id="f-background" class="input" data-bind="theme.background">
+                        <option value="transparent" data-i18n="bg_transparent"></option>
+                        <option value="wallpaper" data-i18n="bg_wallpaper"></option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ---------- Scoring ---------- -->
+            <div class="tab-panel" data-panel="scoring">
+                <div class="row">
+                    <label for="f-preset" data-i18n="scoring_preset"></label>
+                    <select id="f-preset" class="input">
+                        <option value="super">SUPER · 10-6-5-4-3-2-1-1</option>
+                        <option value="classic">Classic · 15-12-10-8-6-4-2-1…</option>
+                        <option value="custom" data-i18n="scoring_custom"></option>
+                    </select>
+                </div>
+                <div class="row stack">
+                    <label for="f-placement" data-i18n="placement_points"></label>
+                    <input id="f-placement" class="input mono" type="text" spellcheck="false" autocomplete="off">
+                    <p class="hint" data-i18n="placement_hint"></p>
+                </div>
+                <div class="row">
+                    <label for="f-kill-points" data-i18n="kill_points"></label>
+                    <input id="f-kill-points" class="input sm center" type="number" min="0" max="99" data-bind="scoring.killPoints">
+                </div>
+                <div class="row">
+                    <label class="switch block">
+                        <input type="checkbox" data-bind="scoring.autoTotal">
+                        <i></i><span data-i18n="auto_total"></span>
+                    </label>
+                </div>
+                <p class="hint" data-i18n="auto_total_hint"></p>
+            </div>
+
+            <!-- ---------- Remote ---------- -->
+            <div class="tab-panel" data-panel="remote">
+                <div class="row stack" id="remote-link-row">
+                    <label data-i18n="remote_link"></label>
+                    <div id="remote-links"></div>
+                    <p class="hint" id="remote-hint"></p>
+                </div>
+                <div class="divider"><span data-i18n="hotkey_urls"></span></div>
+                <p class="hint" data-i18n="hotkey_hint"></p>
+                <div class="url-list" id="cmd-urls"></div>
+            </div>
+        </div>
+    </aside>
+</main>
+
+<footer class="footer">
+    <span>PUBG Scoreboard v{{VERSION}} · <a href="https://streamcd.net" target="_blank" rel="noopener">StreamCD</a> · <a href="https://pubgscore.com" target="_blank" rel="noopener" data-i18n="documentation"></a> · <a href="https://github.com/mmlTools/PUBGScoreboard" target="_blank" rel="noopener">GitHub</a></span>
+    <span class="muted" data-i18n="disclaimer"></span>
+</footer>
+
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<input type="file" id="file-image" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+<input type="file" id="file-import" accept=".json,application/json" hidden>
+
+<dialog class="modal" id="confirm">
+    <form method="dialog">
+        <h3 id="confirm-title"></h3>
+        <p id="confirm-text"></p>
+        <div class="modal-actions">
+            <button type="submit" class="btn" value="cancel" data-i18n="cancel"></button>
+            <button type="submit" class="btn primary" value="ok" id="confirm-ok"></button>
+        </div>
+    </form>
+</dialog>
+
+<dialog class="modal wide" id="match">
+    <form method="dialog" id="match-form">
+        <h3 data-i18n="record_match"></h3>
+        <p class="hint" data-i18n="record_match_hint"></p>
+        <div class="match-scroll">
+            <table class="match-table">
+                <thead>
+                <tr>
+                    <th data-i18n="team_name"></th>
+                    <th class="t-num" data-i18n="placement"></th>
+                    <th class="t-num" data-i18n="col_kills"></th>
+                    <th class="t-num" data-i18n="points_earned"></th>
+                </tr>
+                </thead>
+                <tbody id="match-rows"></tbody>
+            </table>
+        </div>
+        <p class="form-error" id="match-error" hidden></p>
+        <div class="modal-actions spread">
+            <label class="switch"><input type="checkbox" id="match-advance" checked><i></i><span data-i18n="advance_match"></span></label>
+            <span>
+                <button type="submit" class="btn" value="cancel" formnovalidate data-i18n="cancel"></button>
+                <button type="submit" class="btn primary" value="ok" id="match-save"><svg><use href="#i-flag"/></svg><span data-i18n="save_match"></span></button>
+            </span>
+        </div>
+    </form>
+</dialog>
+
+<script>window.SCOREBOARD_CONFIG = {{CONFIG}};</script>
+<script src="{{BASE}}Vendor/js/core.js?v={{VERSION}}"></script>
+<script src="{{BASE}}Vendor/js/obs.js?v={{VERSION}}"></script>
+<script src="{{BASE}}Vendor/js/control.js?v={{VERSION}}"></script>
+</body>
+</html>

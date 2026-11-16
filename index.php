@@ -1,44 +1,71 @@
 <?php
-require_once __DIR__ . "/Engine/GlobalFunctions.php";
-use Engine\GlobalFunctions;
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="icon" sizes="256x256" href="Vendor/favicon/favicon-1.png">
-    <link rel="icon" sizes="128x128" href="Vendor/favicon/favicon-2.png">
-    <link rel="icon" sizes="64x64" href="Vendor/favicon/favicon-3.png">
-    <link rel="icon" sizes="48x48" href="Vendor/favicon/favicon-4.png">
-    <link rel="icon" sizes="32x32" href="Vendor/favicon/favicon-5.png">
-    <link rel="icon" sizes="16x16" href="Vendor/favicon/favicon-6.png">
-    <link rel="apple-touch-icon" sizes="57x57" href="Vendor/favicon/apple-touch-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="Vendor/favicon/apple-touch-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="Vendor/favicon/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="Vendor/favicon/apple-touch-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="Vendor/favicon/apple-touch-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="Vendor/favicon/apple-touch-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="Vendor/favicon/apple-touch-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="Vendor/favicon/apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="Vendor/favicon/apple-touch-icon-180x180.png">
-    <title>StreamCD: PubG Room Scoreboard</title>
-    <meta name="description" content="StreamCD: PubG Room Scoreboard">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="Vendor/css/bootstrap.min.css">
-    <link rel="stylesheet" href="Vendor/css/all.min.css">
-    <link rel="stylesheet" href="Vendor/css/odometer-theme-default.css">
-    <link rel="stylesheet" href="Vendor/css/animate.min.css">
-    <link rel="stylesheet" href="Vendor/css/scoreboard.css">
-</head>
-<body>
-<?php include GlobalFunctions::GetPath() ?>
-</body>
-<script src="Vendor/js/jquery-3.6.0.min.js"></script>
-<script src="Vendor/js/bootstrap.bundle.min.js"></script>
-<script src="Vendor/js/wow.min.js"></script>
-<script src="Vendor/js/odometer.min.js"></script>
-<script src="Vendor/js/main.js"></script>
-<script src="Vendor/js/<?= GlobalFunctions::GetPath(".js") ?>"></script>
-</html>
+/**
+ * Front controller for Apache (see .htaccess) and `php -S`.
+ *
+ * This path has no WebSocket; the pages fall back to fast HTTP polling.
+ * For instant updates run the standalone server instead: `php server.php`.
+ */
+
+require_once __DIR__ . '/Engine/Store.php';
+require_once __DIR__ . '/Engine/Api.php';
+require_once __DIR__ . '/Engine/Pages.php';
+
+use Engine\Api;
+use Engine\Pages;
+use Engine\Store;
+
+// URL prefix of the app: "/" at a domain root, "/PUBGScoreboard/" in an htdocs subfolder.
+// (As a `php -S` router script, SCRIPT_NAME is the requested file instead — that setup always runs at "/".)
+$script = str_replace('\\', '/', isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '/index.php');
+// dirname('/index.php') is "\" on Windows, hence the second replace.
+$base = basename($script) === 'index.php' ? rtrim(str_replace('\\', '/', dirname($script)), '/') . '/' : '/';
+$uri = (string) parse_url(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/', PHP_URL_PATH);
+$path = rawurldecode($uri);
+if (strncmp($path, $base, strlen($base)) === 0) {
+    $path = substr($path, strlen($base));
+}
+$path = trim((string) preg_replace('~^index\.php/?~', '', ltrim($path, '/')), '/');
+
+// `php -S host:port index.php`: let the built-in server deliver real files.
+if (PHP_SAPI === 'cli-server' && $path !== '' && is_file(__DIR__ . '/' . $path) && Pages::isPublicFile($path)) {
+    return false;
+}
+
+if ($path === 'api' || strncmp($path, 'api/', 4) === 0) {
+    $headers = [];
+    foreach ($_SERVER as $name => $value) {
+        if (strncmp($name, 'HTTP_', 5) === 0) {
+            $headers[strtolower(str_replace('_', '-', substr($name, 5)))] = $value;
+        }
+    }
+    if (isset($_SERVER['CONTENT_TYPE'])) {
+        $headers['content-type'] = $_SERVER['CONTENT_TYPE'];
+    }
+    $api = new Api(new Store(), ['mode' => 'php', 'realtime' => false, 'port' => isset($_SERVER['SERVER_PORT']) ? (int) $_SERVER['SERVER_PORT'] : null]);
+    $res = $api->handle(
+        isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET',
+        $path,
+        $_GET,
+        $headers,
+        (string) file_get_contents('php://input'),
+        isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : ''
+    );
+    http_response_code($res['status']);
+    foreach ($res['headers'] as $name => $value) {
+        header($name . ': ' . $value);
+    }
+    echo $res['body'];
+    return;
+}
+
+$view = Pages::view($path);
+if ($view === null) {
+    http_response_code(404);
+    header('Content-Type: text/plain; charset=utf-8');
+    echo "Not found. The control panel lives at {$base} and the overlay at {$base}scoreboard";
+    return;
+}
+
+header('Content-Type: text/html; charset=utf-8');
+header('Cache-Control: no-cache');
+echo Pages::render($view, $base, ['realtime' => false]);

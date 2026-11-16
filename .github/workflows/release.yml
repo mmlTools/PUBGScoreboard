@@ -1,0 +1,190 @@
+name: Release
+
+# Publishing a version:
+#   1. set "_VERSION" in about.json (for example "v2.1.0") and commit
+#   2. git tag v2.1.0 && git push origin v2.1.0
+#
+# The workflow tests the code, builds two packages, boots the Windows portable
+# package on a real Windows runner, and only then publishes the GitHub release:
+#
+#   PUBGScoreboard-<version>.zip                    for PHP 7.4+ / Apache / XAMPP users
+#   PUBGScoreboard-<version>-windows-portable.zip   PHP included: unzip, run Start.bat
+#
+# Run it by hand (Actions → Release → Run workflow) to build the packages
+# without publishing; they are attached to the run as an artifact.
+
+on:
+  push:
+    tags: ['v[0-9]+.[0-9]+.[0-9]+']
+  workflow_dispatch:
+    inputs:
+      php_series:
+        description: PHP series bundled into the Windows portable package
+        default: '8.4'
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  PHP_SERIES: ${{ inputs.php_series || '8.4' }}
+
+jobs:
+  test:
+    uses: ./.github/workflows/ci.yml
+
+  build:
+    name: Build packages
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Read version
+        id: version
+        run: |
+          version="$(jq -r '._VERSION' about.json)"
+          if [[ ! "$version" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "::error file=about.json::_VERSION must look like v1.2.3 (found: $version)"
+            exit 1
+          fi
+          if [[ "$GITHUB_REF_TYPE" == "tag" && "$GITHUB_REF_NAME" != "$version" ]]; then
+            echo "::error file=about.json::Tag $GITHUB_REF_NAME does not match about.json ($version). Update _VERSION, commit, and move the tag."
+            exit 1
+          fi
+          echo "version=${version#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Download PHP ${{ env.PHP_SERIES }} for Windows
+        run: |
+          # The official feed lists the current patch release of every series, with checksums.
+          feed="$(curl -fsSL --retry 5 --retry-delay 3 -A 'PUBGScoreboard-release' https://windows.php.net/downloads/releases/releases.json)"
+          read -r path sha < <(jq -r --arg series "$PHP_SERIES" '
+            .[$series] // error("PHP series \($series) is not in the release feed")
+            | to_entries[] | select(.key | test("^nts-.*-x64$")) | .value.zip | "\(.path) \(.sha256)"' <<< "$feed") || true
+          [ -n "${path:-}" ] || { echo "::error::No 64-bit NTS build of PHP $PHP_SERIES in the release feed"; exit 1; }
+          echo "Bundling $path"
+          curl -fsSL --retry 5 --retry-delay 3 -A 'PUBGScoreboard-release' -o php.zip "https://windows.php.net/downloads/releases/$path"
+          echo "$sha  php.zip" | sha256sum --check --strict
+          mkdir -p "$RUNNER_TEMP/php"
+          unzip -q php.zip -d "$RUNNER_TEMP/php"
+          rm php.zip
+          echo "PHP_ZIP=$path" >> "$GITHUB_ENV"
+
+      - name: Package
+        run: |
+          chmod +x .github/scripts/package.sh
+          .github/scripts/package.sh --php-dir "$RUNNER_TEMP/php"
+
+      - name: Summary
+        run: |
+          {
+            echo "### PUBG Scoreboard ${{ steps.version.outputs.version }}"
+            echo
+            echo "Bundled runtime: \`$PHP_ZIP\`"
+            echo
+            echo '```'
+            ls -l dist
+            echo
+            cat dist/SHA256SUMS.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: packages
+          path: dist/
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0 # the payload is already zipped
+
+  verify-windows:
+    name: Boot the portable package on Windows
+    needs: build
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          package-manager-cache: false
+
+      - uses: actions/download-artifact@v8
+        with:
+          name: packages
+          path: dist
+
+      - name: Unpack exactly what users will download
+        shell: pwsh
+        run: |
+          $zip = Get-Item "dist/PUBGScoreboard-${{ needs.build.outputs.version }}-windows-portable.zip"
+          Expand-Archive -Path $zip -DestinationPath portable
+          $app = Join-Path $PWD 'portable/PUBGScoreboard'
+
+          foreach ($needed in 'Start.bat', 'Start (remote control).bat', 'server.php', 'index.php', 'runtime/php/php.exe', 'runtime/php/license.txt', 'Views/control.html', 'Autoload/translations.json') {
+            if (-not (Test-Path (Join-Path $app $needed))) { throw "Missing from the package: $needed" }
+          }
+          foreach ($excluded in 'tests', '.github', 'Autoload/tournament_data.json', 'Autoload/server.php') {
+            if (Test-Path (Join-Path $app $excluded)) { throw "Should not be in the package: $excluded" }
+          }
+          # cmd.exe misreads labels in batch files that do not use CRLF line endings
+          $bat = [IO.File]::ReadAllText((Join-Path $app 'Start.bat'))
+          if ($bat -notmatch "`r`n") { throw 'Start.bat lost its CRLF line endings' }
+
+          "APP=$app" >> $env:GITHUB_ENV
+
+      - name: Run the test suites with the bundled PHP
+        shell: pwsh
+        run: |
+          # No PHP is installed by this job: only the runtime inside the package is used.
+          Copy-Item -Recurse tests (Join-Path $env:APP 'tests')
+          Set-Location $env:APP
+          $env:PHP_BIN = Join-Path $env:APP 'runtime/php/php.exe'
+          & $env:PHP_BIN -v
+          & $env:PHP_BIN tests/api.php
+          if ($LASTEXITCODE -ne 0) { throw 'Backend tests failed with the bundled PHP' }
+          node tests/server.mjs
+          if ($LASTEXITCODE -ne 0) { throw 'Server tests failed with the bundled PHP' }
+
+  publish:
+    name: Publish GitHub release
+    needs: [build, verify-windows]
+    if: github.ref_type == 'tag'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: packages
+          path: dist
+
+      - uses: softprops/action-gh-release@v3
+        with:
+          name: PUBG Scoreboard ${{ needs.build.outputs.version }}
+          files: dist/*
+          fail_on_unmatched_files: true
+          generate_release_notes: true
+          make_latest: true
+          body: |
+            ## Download
+
+            | Package | For |
+            | --- | --- |
+            | **`PUBGScoreboard-${{ needs.build.outputs.version }}-windows-portable.zip`** | Windows streaming PCs. PHP is included — unzip anywhere and double-click **Start.bat**. |
+            | `PUBGScoreboard-${{ needs.build.outputs.version }}.zip` | macOS / Linux (`./start.sh`), or an existing PHP 7.4+ / Apache / XAMPP setup. |
+
+            Then add `http://localhost:8080/scoreboard` to OBS as a **Browser** source (1920 × 1080) — or connect the control panel to OBS and let it do that for you.
+
+            Upgrading from 1.x? Copy your old `Autoload/tournament_data.json` into the new folder, or use **Import** in the control panel; old files are converted automatically.
+
+            `SHA256SUMS.txt` lists the checksums of both packages.

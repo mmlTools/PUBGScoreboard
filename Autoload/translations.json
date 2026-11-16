@@ -1,262 +1,176 @@
 {
-  "_comment_A": "Language indexes starting with A",
-  "_comment_B": "Language indexes starting with B",
-  "btn_append_new_team" : {
-    "ro" :  "Adaugă echipă",
-    "en":  "New Team"
-  },
-  "btn_save_changes" : {
-    "ro" :  "Actualizează",
-    "en":  "Save changes"
-  },
-  "btn_download_configuration" : {
-    "ro" :  "Descarcă configurația",
-    "en":  "Download configuration"
-  },
-  "btn_upload_configuration" : {
-    "ro" :  "Încarcă configurație", "en":  "Upload configuration"},
-  "btn_confirm" : {
-    "ro" :  "Confirm",
-    "en":  "Confirm"
-  },
-  "btn_download" : {
-    "ro" :  "Descarcă",
-    "en":  "Download"
-  },
-  "btn_settings_menu" : {
-    "ro" :  "Meniu setări",
-    "en":  "Settings menu"
-  },
-  "btn_reset_competition" : {
-    "ro" :  "Resetează competiția",
-    "en":  "Reset competition"
-  },
-  "btn_reset_scores" : {
-    "ro" :  "Resetează scor",
-    "en":  "Reset score"
-  },
-  "btn_upload" : {
-    "ro" :  "Încarcă dateșe în tabel",
-    "en":  "Load data to table"
-  },
+  "_comment": "key -> { language: text }. To add a language: add its code to every entry, to Store::LANGUAGES in Engine/Store.php, and a button in Views/control.html.",
 
-  "_comment_C": "Language indexes starting with C",
-  "competition_results" : {
-    "ro" :  "Rezultate turneu",
-    "en":  "Tournament results"
-  },
-  "competition_day" : {
-    "ro" :  "Ziua",
-    "en":  "Day"
-  },
-  "competition_match" : {
-    "ro" :  "Meciul",
-    "en":  "Match"
-  },
-
-  "_comment_D": "Language indexes starting with D",
-  "donate_coffee" : {
-    "ro" :  "Trimite o cafea",
-    "en":  "Buy me a coffee"
-  },
-
-  "_comment_E": "Language indexes starting with E",
-  "error_invalid_configuration_file" : {
-    "ro" :  "Fișierul selectat nu este un fișier de configurare valid.",
-    "en":  "The selected file is not a valid configuration file."
-  },
-  "error_invalid_file_structure" : {
-    "ro" :  "Structura fișierului selectat nu coincide cu structura actuală a datelor competiției.",
-    "en":  "The structure of the selected file does not match the current structure of the competition data."
-  },
-
-  "_comment_F": "Language indexes starting with F",
-  "_comment_G": "Language indexes starting with G",
-  "_comment_H": "Language indexes starting with H",
-  "_comment_I": "Language indexes starting with I",
-  "info_download_configuration" : {
-    "ro" :  "Denumește configurația",
-    "en":  "Name your configuration"
-  },
-  "info_changes_saved_success" : {
-    "ro" :  "Scorul a fost actualizat cu succes",
-    "en":  "Score successfully updated"
-  },
-  "info_squad_removed_success" : {
-    "ro" :  "Squadul a fost eliminat cu succes din competiție, nu uita să actualizezi tabela !",
-    "en":  "The team has been successfully eliminated from the competition, don't forget to update the table!"
-  },
-  "info_select_json_file" : {
-    "ro" :  "Selectează fișierul de configurație .json",
-    "en":  "Select the .json configuration file"
-  },
-  "info_score_reset_success" : {
-    "ro" :  "Scorul tuturor echipelor a fost resetat cu succes, nu uita să salvezi modificările !",
-    "en":  "The score of all the teams was successfully reset, don't forget to save the changes !"
-  },
-  "info_data_download_success" : {
-    "ro" :  "Fișierul a fost descărcat cu succes, plasează-l în folderul <strong>:/scoreboard/Data</strong> pentru a-l afișa în vizualizarea panoului de scor în livestream!",
-    "en":  "The file was successfully downloaded, place it in the <strong>:/scoreboard/Data</strong> folder to display it in the livestream scoreboard view!"
-  },
-  "info_upload_data_success" : {
-    "ro" :  "Configurația a fost încărcată cu succes iar tabela a fost resetată cu datele recent încărcate.",
-    "en":  "The configuration was successfully uploaded and the table was reset with the recently uploaded data."
-  },
-  "info_give_it_a_name" : {
-    "ro" :  "Pentru a salva fișierul de configurare curent pe unitatea locală, dați-i un nume. Acest fișier conține toate informațiile despre turneu, pe care le veți putea încărca în panoul de configurare, precum și previzualizarea mai târziu.",
-    "en":  "To save the current configuration file to your local drive, give it a name. This file contains all tournament information, which you will be able to upload to the setup panel as well as the preview later."
-  },
-  "input_competition_name" : {
-    "ro" :  "Denumirea competiției",
-    "en":  "Competition title"
-  },
-  "input_competition_day" : {
-    "ro" :  "Ziua",
-    "en":  "Competition day"
-  },
-  "input_competition_match" : {
-    "ro" :  "Meciul",
-    "en":  "Competition match"
-  },
-  "input_table_map" : {
-    "ro" :  "Harta",
-    "en":  "Map"
-  },
-  "input_tablebg_logo" : {
-    "ro" :  "Fundal coloană logo",
-    "en":  "Logo column background"
-  },
-  "input_tablebg_main" : {
-    "ro" :  "Fundal principal coloane",
-    "en":  "Column main background"
-  },
-  "input_tablebg_secondary" : {
-    "ro" :  "Fundal secundar coloane",
-    "en":  "Column secondary background"
-  },
-  "input_tablebg_wallpaper" : {
-    "ro" :  "Fundal pagină afișaj",
-    "en":  "Scoreboard wallpaper"
-  },
-  "input_table_text_color" : {
-    "ro" :  "Culoare text tabelă",
-    "en":  "Table text color"
-  },
-  "input_teams_page" : {
-    "ro" :  "Afișare echipe/pagină",
-    "en":  "Preview teams/page"
-  },
-  "input_table_alignment" : {
-    "ro" :  "Poziție tabel în livestream",
-    "en":  "Livestream Scoreboard position"
-  },
-  "input_table_animation_in" : {
-    "ro" :  "Animație afișare tabel",
-    "en":  "Show animation"
-  },
-  "input_table_animation_out" : {
-    "ro" :  "Animație ascundere tabel",
-    "en":  "Hide animation"
-  },
-
-  "_comment_J": "Language indexes starting with J",
-  "_comment_K": "Language indexes starting with K",
-  "_comment_L": "Language indexes starting with L",
-  "language_name_ro" : {
-    "ro" :  "Romana",
-    "en":  "Romanian"
-  },
-  "language_name_en" : {
-    "ro" :  "Engleza",
-    "en":  "English"
-  },
-
-  "_comment_M": "Language indexes starting with M",
-  "menu_link_homepage" : {
-    "ro" :  "Setari",
-    "en":  "Settings"
-  },
-  "menu_link_language" : {
-    "ro" :  "Limba",
-    "en":  "Language"
-  },
-  "menu_link_launch_scoreboard" : {
-    "ro" :  "Deschide tabela",
-    "en":  "Launch scoreboard"
-  },
-
-  "_comment_N": "Language indexes starting with N",
-  "_comment_O": "Language indexes starting with O",
-  "_comment_P": "Language indexes starting with P",
-  "_comment_Q": "Language indexes starting with Q",
-  "_comment_R": "Language indexes starting with R",
-  "_comment_S": "Language indexes starting with S",
-  "_comment_T": "Language indexes starting with T",
-  "table_head_squad_logo" : {
-    "ro" :  "Squad logo",
-    "en":  "Squad Logo"
-  },
-  "table_head_squad_name" : {
-    "ro" :  "Denumire squad",
-    "en":  "Squad Title"
-  },
-  "table_head_matches_played" : {
-    "ro" :  "Meciuri jucate",
-    "en":  "Matches Played"
-  },
-  "table_head_chicken_dinner" : {
-    "ro" :  "Chicken dinner",
-    "en":  "Chicken Dinner"
-  },
-  "table_head_place_points" : {
-    "ro" :  "Puncte poziție",
-    "en":  "Place Points"
-  },
-  "table_head_total_kills" : {
-    "ro" :  "Total eliminări",
-    "en":  "Total Kills"
-  },
-  "table_head_total_points" : {
-    "ro" :  "Total puncte",
-    "en":  "Total Points"
-  },
-  "total_teams" : {
-    "ro" :  "Total squaduri",
-    "en":  "Total squads"
-  },
-
-  "_comment_U": "Language indexes starting with U",
-  "upload_status" : {
-    "ro" :  "Status încărcare",
-    "en":  "Upload status"
-  },
-  "upload_status_success" : {
-    "ro" :  "Succes",
-    "en":  "Success"
-  },
-  "upload_status_brieff" : {
-    "ro" :  "Verifică cu mare atenție datele de mai jos înainte de a încărca tabela.",
-    "en":  "Please check the data below carefully before loading the table."
-  },
-
-  "_comment_V": "Language indexes starting with V",
-  "_comment_W": "Language indexes starting with W",
-  "warning_remove_squad" : {
-    "ro" :  "Ești sigur că vrei să ștergi squad-ul din listă ? Această operațiune nu se poate recupera !",
-    "en":  "Are you sure you want to delete the squad from the list? This operation cannot be recovered!"
-  },
-  "warning_reset_competition" : {
-    "ro" :  "Ești sigur că vrei să resetezi toate setările competiției inclusiv echipele înregistrate ? Această operațiune nu se poate recupera, dacă dorești să resetezi doar scorul tuturor echipelor, utilizează opțiunea de resetare scor !",
-    "en":  "Are you sure you want to clear all of the competition's settings, including those for registered teams? This procedure cannot be undone; instead, you can use the score reset option to reset the scores of all teams!"
-  },
-  "warning_reset_scores" : {
-    "ro" :  "Ești sigur că vrei să resetezi scorul tuturor echipelor ? Această operațiune nu se poate recupera!",
-    "en":  "Are you sure you want to reset all team scores? This operation cannot be recovered!"
-  },
-
-  "_comment_X": "Language indexes starting with X",
-  "_comment_Y": "Language indexes starting with Y",
-  "_comment_Z": "Language indexes starting with Z",
-
-  "_TRANSLATION_FILE_END": true
+  "add_team": { "en": "Add team", "ro": "Adaugă echipă" },
+  "advance_match": { "en": "Move on to the next match number", "ro": "Treci la numărul meciului următor" },
+  "anim_airdrop": { "en": "Air Drop", "ro": "Air Drop" },
+  "anim_fade": { "en": "Fade", "ro": "Estompare" },
+  "anim_flip": { "en": "Flip", "ro": "Rotire" },
+  "anim_punch": { "en": "Punch", "ro": "Impact" },
+  "anim_tactical": { "en": "Tactical Slide", "ro": "Glisare tactică" },
+  "animation_style": { "en": "Animation style", "ro": "Stil animație" },
+  "auth_needed": { "en": "Read-only: this device has no access key. Open the remote link shown in the control panel on the streaming PC.", "ro": "Doar citire: acest dispozitiv nu are cheie de acces. Deschide linkul de control la distanță afișat în panoul de pe PC-ul de streaming." },
+  "auto_rotate": { "en": "Auto-rotate", "ro": "Rotire automată" },
+  "auto_total": { "en": "Calculate totals automatically", "ro": "Calculează totalul automat" },
+  "auto_total_hint": { "en": "Total = placement points + kills × points per kill. Turn this off to type totals by hand.", "ro": "Total = puncte poziție + eliminări × puncte per eliminare. Dezactivează pentru a introduce totalul manual." },
+  "background": { "en": "Overlay background", "ro": "Fundal overlay" },
+  "bg_transparent": { "en": "Transparent (over gameplay)", "ro": "Transparent (peste joc)" },
+  "bg_wallpaper": { "en": "Wallpaper (full screen)", "ro": "Imagine de fundal (ecran complet)" },
+  "browser_source_hint": { "en": "In OBS: Sources → + → Browser, paste this URL, size 1920 × 1080. Or connect below and add it with one click.", "ro": "În OBS: Surse → + → Browser, lipește acest URL, dimensiune 1920 × 1080. Sau conectează-te mai jos și adaug-o cu un clic." },
+  "browser_source_url": { "en": "Browser source URL", "ro": "URL sursă browser" },
+  "cancel": { "en": "Cancel", "ro": "Anulează" },
+  "choose_image": { "en": "Choose image", "ro": "Alege imagine" },
+  "click_to_hide": { "en": "Click to hide the overlay", "ro": "Clic pentru a ascunde overlay-ul" },
+  "click_to_show": { "en": "Click to show the overlay", "ro": "Clic pentru a afișa overlay-ul" },
+  "cmd_hide": { "en": "Hide", "ro": "Ascunde" },
+  "cmd_next": { "en": "Next", "ro": "Înainte" },
+  "cmd_prev": { "en": "Previous", "ro": "Înapoi" },
+  "cmd_show": { "en": "Show", "ro": "Afișează" },
+  "cmd_toggle": { "en": "Toggle", "ro": "Comută" },
+  "col_kills": { "en": "Kills", "ro": "Eliminări" },
+  "col_matches": { "en": "Played", "ro": "Jucate" },
+  "col_place": { "en": "Place pts", "ro": "Pct. poziție" },
+  "col_total": { "en": "Total", "ro": "Total" },
+  "col_wwcd": { "en": "WWCD", "ro": "WWCD" },
+  "color_accent": { "en": "Accent", "ro": "Accent" },
+  "color_surface": { "en": "Panels", "ro": "Panouri" },
+  "color_text": { "en": "Text", "ro": "Text" },
+  "colors": { "en": "Colours", "ro": "Culori" },
+  "columns": { "en": "Columns", "ro": "Coloane" },
+  "compact_side": { "en": "Compact standings side", "ro": "Poziție clasament compact" },
+  "confirm": { "en": "Confirm", "ro": "Confirmă" },
+  "confirm_import": { "en": "Replace the current tournament with “{name}” ({count} teams)? You can undo this afterwards.", "ro": "Înlocuiești turneul curent cu „{name}” ({count} echipe)? Poți anula ulterior." },
+  "confirm_reset_scores": { "en": "Set every team's matches, kills and points back to zero? Teams and logos stay. You can undo this afterwards.", "ro": "Resetezi la zero meciurile, eliminările și punctele tuturor echipelor? Echipele și logourile rămân. Poți anula ulterior." },
+  "confirm_reset_tournament": { "en": "Remove all teams and restore the default settings? You can undo this afterwards.", "ro": "Ștergi toate echipele și revii la setările implicite? Poți anula ulterior." },
+  "copied": { "en": "Copied to clipboard", "ro": "Copiat în clipboard" },
+  "copy": { "en": "Copy", "ro": "Copiază" },
+  "day": { "en": "Day", "ro": "Ziua" },
+  "did_match_record": { "en": "Match recorded and standings updated", "ro": "Meci înregistrat, clasament actualizat" },
+  "did_scores_reset": { "en": "All scores reset", "ro": "Toate scorurile au fost resetate" },
+  "did_state_import": { "en": "Configuration imported", "ro": "Configurație importată" },
+  "did_team_remove": { "en": "Team removed", "ro": "Echipă ștearsă" },
+  "did_tournament_reset": { "en": "Tournament reset", "ro": "Turneu resetat" },
+  "disclaimer": { "en": "Fan-made tool. Not affiliated with or endorsed by KRAFTON, Inc. or PUBG.", "ro": "Unealtă creată de fani. Fără afiliere sau aprobare din partea KRAFTON, Inc. sau PUBG." },
+  "documentation": { "en": "Documentation", "ro": "Documentație" },
+  "donate_coffee": { "en": "Buy me a coffee", "ro": "Trimite o cafea" },
+  "empty_text": { "en": "Add your squads one by one, import a saved configuration, or load a demo tournament to see the overlay in action.", "ro": "Adaugă echipele una câte una, importă o configurație salvată sau încarcă un turneu demo pentru a vedea overlay-ul în acțiune." },
+  "empty_title": { "en": "No teams yet", "ro": "Nicio echipă încă" },
+  "error_image": { "en": "That image could not be read. Use PNG, JPG, WEBP or GIF.", "ro": "Imaginea nu a putut fi citită. Folosește PNG, JPG, WEBP sau GIF." },
+  "error_import": { "en": "The selected file is not a valid configuration file.", "ro": "Fișierul selectat nu este un fișier de configurare valid." },
+  "error_offline": { "en": "The scoreboard server is not responding. Is its window still open?", "ro": "Serverul nu răspunde. Fereastra lui mai este deschisă?" },
+  "export": { "en": "Export", "ro": "Exportă" },
+  "hotkey_hint": { "en": "Open these URLs from a Stream Deck (Website action, “GET request in background”), a bot or a script to control the overlay.", "ro": "Deschide aceste URL-uri dintr-un Stream Deck (acțiunea Website, „GET request in background”), un bot sau un script pentru a controla overlay-ul." },
+  "hotkey_urls": { "en": "Stream Deck & hotkeys", "ro": "Stream Deck și scurtături" },
+  "images": { "en": "Images", "ro": "Imagini" },
+  "import": { "en": "Import", "ro": "Importă" },
+  "kill_points": { "en": "Points per kill", "ro": "Puncte per eliminare" },
+  "load_demo": { "en": "Load demo tournament", "ro": "Încarcă turneu demo" },
+  "logo": { "en": "Logo", "ro": "Logo" },
+  "logo_change_hint": { "en": "Click to change · Alt + click to remove", "ro": "Clic pentru a schimba · Alt + clic pentru a șterge" },
+  "map": { "en": "Map", "ro": "Hartă" },
+  "match": { "en": "Match", "ro": "Meciul" },
+  "match_error_duplicate": { "en": "Two teams share the same placement.", "ro": "Două echipe au aceeași poziție." },
+  "match_error_empty": { "en": "Enter a placement for at least one team.", "ro": "Introdu poziția pentru cel puțin o echipă." },
+  "match_error_no_place": { "en": "A team has kills but no placement.", "ro": "O echipă are eliminări, dar nu are poziție." },
+  "next_page": { "en": "Next page", "ro": "Pagina următoare" },
+  "obs_add_source": { "en": "Add to scene", "ro": "Adaugă în scenă" },
+  "obs_connect": { "en": "Connect to OBS", "ro": "Conectare la OBS" },
+  "obs_connected": { "en": "OBS connected", "ro": "OBS conectat" },
+  "obs_connecting": { "en": "OBS connecting…", "ro": "Conectare OBS…" },
+  "obs_disconnect": { "en": "Disconnect", "ro": "Deconectare" },
+  "obs_error_auth": { "en": "OBS rejected the password. Check Tools → WebSocket Server Settings → Show Connect Info.", "ro": "OBS a respins parola. Verifică Tools → WebSocket Server Settings → Show Connect Info." },
+  "obs_error_https": { "en": "This page is served over HTTPS, so the browser blocks the connection to OBS. Open the control panel over http://.", "ro": "Pagina este servită prin HTTPS, iar browserul blochează conexiunea către OBS. Deschide panoul prin http://." },
+  "obs_error_lost": { "en": "Connection to OBS lost. Reconnecting…", "ro": "Conexiunea cu OBS s-a pierdut. Reconectare…" },
+  "obs_error_version": { "en": "This OBS WebSocket version is not supported. Update to OBS 28 or newer.", "ro": "Această versiune OBS WebSocket nu este suportată. Actualizează la OBS 28 sau mai nou." },
+  "obs_hint": { "en": "In OBS open Tools → WebSocket Server Settings, tick “Enable WebSocket server”, then use “Show Connect Info” for the port and password.", "ro": "În OBS deschide Tools → WebSocket Server Settings, bifează „Enable WebSocket server”, apoi folosește „Show Connect Info” pentru port și parolă." },
+  "obs_host": { "en": "OBS computer", "ro": "Calculator OBS" },
+  "obs_off": { "en": "OBS not linked", "ro": "OBS neconectat" },
+  "obs_password": { "en": "Server password", "ro": "Parola serverului" },
+  "obs_port": { "en": "Port", "ro": "Port" },
+  "obs_refresh_source": { "en": "Refresh source", "ro": "Reîncarcă sursa" },
+  "obs_remote_title": { "en": "OBS remote control", "ro": "Control OBS la distanță" },
+  "obs_scenes": { "en": "Scenes — click to go live", "ro": "Scene — clic pentru a intra în direct" },
+  "obs_source": { "en": "Scoreboard source", "ro": "Sursa scoreboard" },
+  "obs_source_added": { "en": "Scoreboard added to “{scene}”", "ro": "Scoreboard adăugat în „{scene}”" },
+  "obs_source_missing": { "en": "There is no “PUBG Scoreboard” source in OBS yet. Use “Add to scene” first.", "ro": "Nu există încă o sursă „PUBG Scoreboard” în OBS. Folosește mai întâi „Adaugă în scenă”." },
+  "obs_source_refreshed": { "en": "Browser source refreshed", "ro": "Sursa browser a fost reîncărcată" },
+  "obs_source_visible": { "en": "Visible in the current scene", "ro": "Vizibilă în scena curentă" },
+  "off_air": { "en": "Hidden", "ro": "Ascuns" },
+  "on_air": { "en": "On air", "ro": "În direct" },
+  "open_overlay": { "en": "Open overlay", "ro": "Deschide overlay" },
+  "overlay_day": { "en": "Day", "ro": "Ziua" },
+  "overlay_in_obs": { "en": "Overlay live in OBS", "ro": "Overlay activ în OBS" },
+  "overlay_kills": { "en": "Kills", "ro": "Eliminări" },
+  "overlay_kills_short": { "en": "K", "ro": "E" },
+  "overlay_map": { "en": "Map", "ro": "Hartă" },
+  "overlay_match": { "en": "Match", "ro": "Meciul" },
+  "overlay_matches": { "en": "Played", "ro": "Jucate" },
+  "overlay_none": { "en": "No overlay connected", "ro": "Niciun overlay conectat" },
+  "overlay_open": { "en": "Overlay connected", "ro": "Overlay conectat" },
+  "overlay_place": { "en": "Place", "ro": "Poziție" },
+  "overlay_points_short": { "en": "PTS", "ro": "PCT" },
+  "overlay_standings": { "en": "Standings", "ro": "Clasament" },
+  "overlay_team": { "en": "Team", "ro": "Echipă" },
+  "overlay_top3": { "en": "Top 3", "ro": "Top 3" },
+  "overlay_total": { "en": "Total", "ro": "Total" },
+  "overlay_winner_1": { "en": "Winner Winner", "ro": "Winner Winner" },
+  "overlay_winner_2": { "en": "Chicken Dinner!", "ro": "Chicken Dinner!" },
+  "overlay_wwcd": { "en": "WWCD", "ro": "WWCD" },
+  "placement": { "en": "Placement", "ro": "Poziție" },
+  "placement_hint": { "en": "Points for 1st, 2nd, 3rd… separated by commas. Places beyond the list score 0.", "ro": "Puncte pentru locul 1, 2, 3… separate prin virgulă. Locurile din afara listei primesc 0." },
+  "placement_points": { "en": "Placement points", "ro": "Puncte pentru poziție" },
+  "points_earned": { "en": "Earned", "ro": "Câștigate" },
+  "prev_page": { "en": "Previous page", "ro": "Pagina anterioară" },
+  "preview": { "en": "Preview", "ro": "Previzualizare" },
+  "record_match": { "en": "Record match", "ro": "Înregistrează meci" },
+  "record_match_hint": { "en": "Enter each team's finishing place and kills. Points are added using your scoring rules. Leave the place empty for teams that did not play.", "ro": "Introdu locul final și eliminările fiecărei echipe. Punctele se adaugă conform regulilor de punctaj. Lasă locul gol pentru echipele care nu au jucat." },
+  "remote_hint_no_network": { "en": "No network address found. Connect this PC to your Wi-Fi or LAN.", "ro": "Nu s-a găsit nicio adresă de rețea. Conectează acest PC la Wi-Fi sau LAN." },
+  "remote_hint_off": { "en": "Remote control is off. Close the server and start it with “Start (remote control)” — or `php server.php --lan` — to control the scoreboard from a phone or another PC.", "ro": "Controlul la distanță este oprit. Închide serverul și pornește-l cu „Start (remote control)” — sau `php server.php --lan` — pentru a controla scoreboard-ul de pe telefon sau alt PC." },
+  "remote_hint_on": { "en": "Open this link on a phone, tablet or second PC on the same network. It contains the access key — share it only with people who may edit the scores.", "ro": "Deschide acest link pe un telefon, tabletă sau alt PC din aceeași rețea. Conține cheia de acces — trimite-l doar celor care au voie să modifice scorurile." },
+  "remote_hint_remote": { "en": "You are controlling the scoreboard remotely.", "ro": "Controlezi scoreboard-ul de la distanță." },
+  "remote_link": { "en": "Remote control link", "ro": "Link control la distanță" },
+  "remove": { "en": "Remove", "ro": "Șterge" },
+  "remove_team": { "en": "Remove team", "ro": "Șterge echipa" },
+  "replay": { "en": "Replay", "ro": "Redă" },
+  "replay_animation": { "en": "Replay the entrance animation", "ro": "Redă din nou animația de intrare" },
+  "reset_scores": { "en": "Reset scores", "ro": "Resetează scorul" },
+  "reset_tournament": { "en": "Reset all", "ro": "Resetează tot" },
+  "save_failed": { "en": "Not saved", "ro": "Nesalvat" },
+  "save_match": { "en": "Save match", "ro": "Salvează meciul" },
+  "save_offline": { "en": "Offline — retrying", "ro": "Offline — reîncercare" },
+  "saved": { "en": "All changes saved", "ro": "Toate modificările salvate" },
+  "saving": { "en": "Saving…", "ro": "Se salvează…" },
+  "scoring_custom": { "en": "Custom", "ro": "Personalizat" },
+  "scoring_preset": { "en": "Points system", "ro": "Sistem de punctaj" },
+  "seconds_short": { "en": "sec", "ro": "sec" },
+  "server_connecting": { "en": "Connecting…", "ro": "Conectare…" },
+  "server_hint_poll": { "en": "Running under Apache / php -S: the overlay updates about once a second. Start server.php for instant WebSocket updates.", "ro": "Rulează sub Apache / php -S: overlay-ul se actualizează cam o dată pe secundă. Pornește server.php pentru actualizări instantanee prin WebSocket." },
+  "server_hint_ws": { "en": "Changes reach the overlay instantly over WebSocket.", "ro": "Modificările ajung instantaneu în overlay prin WebSocket." },
+  "server_live": { "en": "Live sync", "ro": "Sincronizare live" },
+  "server_offline": { "en": "Server offline", "ro": "Server offline" },
+  "server_polling": { "en": "Connected", "ro": "Conectat" },
+  "server_reconnecting": { "en": "Reconnecting…", "ro": "Reconectare…" },
+  "show_winner": { "en": "Show Chicken Dinner", "ro": "Afișează Chicken Dinner" },
+  "side_left": { "en": "Left", "ro": "Stânga" },
+  "side_right": { "en": "Right", "ro": "Dreapta" },
+  "tab_design": { "en": "Design", "ro": "Design" },
+  "tab_remote": { "en": "Remote", "ro": "Remote" },
+  "tab_scoring": { "en": "Scoring", "ro": "Punctaj" },
+  "tag": { "en": "Tag", "ro": "Tag" },
+  "team_name": { "en": "Team", "ro": "Echipă" },
+  "team_name_placeholder": { "en": "Team name", "ro": "Numele echipei" },
+  "teams": { "en": "Teams", "ro": "Echipe" },
+  "teams_hint": { "en": "Everything saves as you type and appears on stream instantly. Enter jumps down a column · ↑ ↓ change a number by one.", "ro": "Totul se salvează pe măsură ce scrii și apare instant în stream. Enter coboară pe coloană · ↑ ↓ modifică numărul cu unu." },
+  "teams_per_page": { "en": "Teams per page", "ro": "Echipe pe pagină" },
+  "tournament_logo": { "en": "Tournament logo", "ro": "Logo turneu" },
+  "tournament_name": { "en": "Tournament", "ro": "Turneu" },
+  "undo": { "en": "Undo", "ro": "Anulează" },
+  "undone": { "en": "Restored the previous state", "ro": "Starea anterioară a fost restaurată" },
+  "view_compact": { "en": "Compact", "ro": "Compact" },
+  "view_leaderboard": { "en": "Leaderboard", "ro": "Clasament" },
+  "view_podium": { "en": "Top 3", "ro": "Top 3" },
+  "view_winner": { "en": "Winner", "ro": "Câștigător" },
+  "wallpaper": { "en": "Wallpaper", "ro": "Imagine de fundal" },
+  "winner_auto": { "en": "Automatic (last match winner)", "ro": "Automat (câștigătorul ultimului meci)" },
+  "winner_team": { "en": "Winning team", "ro": "Echipa câștigătoare" }
 }

@@ -1,0 +1,10 @@
+version: 2
+updates:
+  # Keeps the workflow actions current (the app itself has no dependencies to update).
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ['*']

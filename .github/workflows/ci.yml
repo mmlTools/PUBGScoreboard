@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  workflow_call: # reused by release.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: PHP ${{ matrix.php }} · ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        php: ['7.4', '8.1', '8.3', '8.5']
+        include:
+          # Most people run this on a Windows streaming PC: test the socket code there too.
+          - os: windows-latest
+            php: '8.4'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          tools: none
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          package-manager-cache: false
+
+      - name: PHP syntax
+        run: |
+          status=0
+          for file in index.php server.php Engine/*.php tests/*.php; do
+            php -l "$file" > /dev/null || status=1
+          done
+          exit $status
+
+      - name: Backend tests
+        run: php tests/api.php
+
+      - name: Static checks (JavaScript, translations, metadata)
+        run: node tests/static.mjs
+
+      - name: Server integration tests (HTTP + WebSocket)
+        run: node tests/server.mjs

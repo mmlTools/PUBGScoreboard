@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>PUBG Scoreboard — Overlay</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <link rel="icon" href="{{BASE}}favicon.ico">
+    <link rel="stylesheet" href="{{BASE}}Vendor/css/fonts.css?v={{VERSION}}">
+    <link rel="stylesheet" href="{{BASE}}Vendor/css/overlay.css?v={{VERSION}}">
+</head>
+<body>
+<!--
+    Fixed 1920x1080 stage, scaled to whatever size the browser source has.
+    Add as an OBS Browser Source: 1920 x 1080, transparent background.
+
+    URL options:
+      ?view=leaderboard|compact|podium|winner   pin this source to one view
+      ?always=1                                 ignore the Show/Hide switch
+      ?preview=1                                dark backdrop (for normal browsers)
+-->
+<div id="stage" aria-live="off">
+    <div id="backdrop"></div>
+
+    <section id="view-leaderboard" class="view lb" hidden>
+        <header class="lb-head">
+            <div class="lb-brand">
+                <div class="lb-logo" hidden><img alt=""></div>
+                <div class="lb-titles">
+                    <div class="lb-kicker"><span class="kicker-bar"></span><span data-i18n="overlay_standings"></span></div>
+                    <h1 class="lb-title"></h1>
+                </div>
+            </div>
+            <dl class="lb-meta">
+                <div class="meta" data-meta="map"><dt data-i18n="overlay_map"></dt><dd></dd></div>
+                <div class="meta" data-meta="day"><dt data-i18n="overlay_day"></dt><dd></dd></div>
+                <div class="meta" data-meta="match"><dt data-i18n="overlay_match"></dt><dd></dd></div>
+            </dl>
+        </header>
+        <div class="lb-cols grid">
+            <span class="h-rank">#</span>
+            <span class="h-team" data-i18n="overlay_team"></span>
+            <span class="c-mp" data-i18n="overlay_matches"></span>
+            <span class="c-wwcd" data-i18n="overlay_wwcd"></span>
+            <span data-i18n="overlay_place"></span>
+            <span data-i18n="overlay_kills"></span>
+            <span class="h-total" data-i18n="overlay_total"></span>
+        </div>
+        <div class="lb-rows rows"></div>
+        <footer class="lb-foot">
+            <div class="pager"></div>
+        </footer>
+    </section>
+
+    <section id="view-compact" class="view cp" hidden>
+        <header class="cp-head">
+            <span class="cp-title" data-i18n="overlay_standings"></span>
+            <span class="cp-match"></span>
+        </header>
+        <div class="cp-legend"><span data-i18n="overlay_team"></span><span data-i18n="overlay_kills_short"></span><span data-i18n="overlay_points_short"></span></div>
+        <div class="cp-rows rows"></div>
+    </section>
+
+    <section id="view-podium" class="view pd" hidden>
+        <header class="pd-head">
+            <div class="lb-kicker"><span class="kicker-bar"></span><span class="pd-name"></span></div>
+            <h1 class="pd-title" data-i18n="overlay_top3"></h1>
+        </header>
+        <div class="pd-cards"></div>
+    </section>
+
+    <section id="view-winner" class="view wn" hidden>
+        <canvas class="wn-sparks" width="1920" height="1080"></canvas>
+        <div class="wn-rays"></div>
+        <div class="wn-body">
+            <div class="wn-line wn-line-1" data-i18n="overlay_winner_1"></div>
+            <div class="wn-line wn-line-2" data-i18n="overlay_winner_2"></div>
+            <div class="wn-team">
+                <div class="wn-logo"></div>
+                <div class="wn-name"></div>
+            </div>
+            <div class="wn-stats">
+                <div class="wn-stat"><b data-stat="kills">0</b><span data-i18n="overlay_kills"></span></div>
+                <div class="wn-stat"><b data-stat="points">0</b><span data-i18n="overlay_total"></span></div>
+                <div class="wn-stat"><b data-stat="wwcd">0</b><span data-i18n="overlay_wwcd"></span></div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>window.SCOREBOARD_CONFIG = {{CONFIG}};</script>
+<script src="{{BASE}}Vendor/js/core.js?v={{VERSION}}"></script>
+<script src="{{BASE}}Vendor/js/overlay.js?v={{VERSION}}"></script>
+</body>
+</html>

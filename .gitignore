@@ -1,2 +1,19 @@
+# Live tournament data — created at runtime, never committed
 /Autoload/tournament_data.json
-Autoload/tournament_data.json
+/Autoload/uploads/
+/Autoload/backups/
+/Autoload/server.php
+/Autoload/.lock
+*.tmp
+
+# Bundled PHP runtime of the portable Windows package (added by the release workflow)
+/runtime/
+
+# Build output
+/dist/
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
