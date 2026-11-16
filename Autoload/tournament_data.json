@@ -1,1 +1,55 @@
-{"language":"en","competition_name":"Tournament title","input_tablebg_logo":"#ffffff","input_tablebg_main":"#ffc107","input_table_text_color":"#303030","input_tablebg_secondary":"#f0d17a","competition_day":"","competition_match":"","show_matches_played":"1","show_chicken_dinner":"1","input_table_map":"Erangel","input_teams_page":"8","input_tablebg_wallpaper":"Vendor\/img\/upload-logo.png","input_table_animation_in":"jackInTheBox"}
+{
+    "version": 2,
+    "rev": 44,
+    "language": "en",
+    "tournament": {
+        "name": "Tournament title",
+        "map": "Erangel",
+        "day": "1",
+        "match": "1",
+        "logo": ""
+    },
+    "scoring": {
+        "killPoints": 1,
+        "placement": [
+            10,
+            6,
+            5,
+            4,
+            3,
+            2,
+            1,
+            1
+        ],
+        "autoTotal": true
+    },
+    "theme": {
+        "accent": "#f2a900",
+        "surface": "#12151a",
+        "text": "#ffffff",
+        "wallpaper": "",
+        "background": "transparent",
+        "animation": "tactical",
+        "teamsPerPage": 8,
+        "showMatches": true,
+        "showWwcd": true,
+        "compactSide": "left"
+    },
+    "teams": [],
+    "overlay": {
+        "visible": true,
+        "view": "leaderboard",
+        "page": 0,
+        "autoRotate": true,
+        "rotateSeconds": 12,
+        "winnerId": "",
+        "replay": 0
+    },
+    "history": [
+        {
+            "id": "h1a68627a59",
+            "label": "tournament.reset",
+            "at": 1794864101
+        }
+    ]
+}

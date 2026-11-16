@@ -457,6 +457,11 @@ input[type="number"]::-webkit-outer-spin-button {
 .btn.full {
   width: 100%;
 }
+.btn.lg {
+  height: 50px;
+  padding: 0 28px;
+  font-size: 16px;
+}
 
 .toolbar {
   display: flex;
@@ -792,6 +797,52 @@ tr[data-rank="3"] .rank-badge {
 .teams > .hint {
   padding: 12px 20px 16px;
   border-top: 1px solid var(--line-soft);
+}
+
+/* ------------------------------------------------------------------ */
+/* Donation card                                                       */
+/* ------------------------------------------------------------------ */
+
+.donate {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 22px;
+  padding: 24px 26px;
+  background:
+    linear-gradient(100deg, rgba(242, 169, 0, 0.16), rgba(242, 169, 0, 0) 60%),
+    var(--panel);
+  border-color: rgba(242, 169, 0, 0.5);
+}
+.donate::before {
+  width: 100%;
+}
+.donate-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  color: var(--accent-ink);
+  background: var(--accent);
+  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+}
+.donate-mark svg {
+  width: 32px;
+  height: 32px;
+}
+.donate-text {
+  flex: 1 1 300px;
+  min-width: 0;
+}
+.donate-text h3 {
+  padding-top: 4px;
+  font-size: 34px;
+}
+.donate-text p {
+  max-width: 620px;
+  margin: 6px 0 0;
+  color: var(--muted);
 }
 
 /* ------------------------------------------------------------------ */
@@ -1487,6 +1538,12 @@ tr[data-rank="3"] .rank-badge {
   }
   .toolbar .btn.primary {
     width: 48px;
+  }
+  .donate {
+    padding: 18px 16px;
+  }
+  .donate .btn {
+    width: 100%;
   }
   .toasts {
     right: 12px;

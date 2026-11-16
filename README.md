@@ -6,7 +6,7 @@
 [![Latest release](https://img.shields.io/github/v/release/mmlTools/PUBGScoreboard)](https://github.com/mmlTools/PUBGScoreboard/releases/latest)
 [![License: GPL v3](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE)
 
-By [StreamCD](https://streamcd.net) · Documentation: [pubgscore.com](https://pubgscore.com)
+By [StreamCD](https://streamcd.net)
 
 Run custom-room tournaments (PUBG, PUBG Mobile, or anything with placements and kills) and put the standings on stream. Type scores in the control panel; the overlay in OBS updates the same instant, animated.
 
@@ -132,4 +132,4 @@ Licensed under the [GNU GPL v3](LICENSE). Fonts: [Teko](https://fonts.google.com
 
 This is a fan-made tool. It is not affiliated with, endorsed by or sponsored by KRAFTON, Inc. or PUBG. PUBG and PLAYERUNKNOWN'S BATTLEGROUNDS are trademarks of their respective owners.
 
-If the scoreboard helps your stream, you can [buy me a coffee](https://ko-fi.com/streamcd).
+If the scoreboard helps your stream, you can [buy me a coffee](https://www.paypal.com/donate/?hosted_button_id=ZKTLLYY9ADWYQ).
